@@ -3441,9 +3441,9 @@ def get_section_hash_pattern(hash) -> re.Pattern:
     return re.compile(
         r'''
             (?:^|(?<=\n))(
-                [ \t]*?\[(?:Texture|Shader)Override.*\]
+                [ \t]*?\[(?:Texture|Shader)Override.*\][ \t]*
                 (?:\n\s*(?![ \t]*?\[).*?)*?
-                (?:\n\s*hash\s*=\s*{})
+                (?:\n\s*hash\s*=\s*{}[ \t]*)
                 (?:
                     (?:\n(?![ \t]*?\[).*?)*
                     (?:\n[$\w].*)+

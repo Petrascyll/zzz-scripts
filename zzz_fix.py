@@ -3440,32 +3440,32 @@ hash_commands = {
 def get_section_hash_pattern(hash) -> re.Pattern:
     return re.compile(
         r'''
-            (?:^|(?<=\n))(
+            ^(
                 [ \t]*?\[(?:Texture|Shader)Override.*\][ \t]*
-                (?:\n\s*(?![ \t]*?\[).*?)*?
+                (?:\n(?![ \t]*?\[).*?$)*?
                 (?:\n\s*hash\s*=\s*{}[ \t]*)
                 (?:
-                    (?:\n(?![ \t]*?\[).*?)*
+                    (?:\n(?![ \t]*?\[).*?$)*
                     (?:\n[$\w].*)+
                 )?
             )\s*
         '''.format(hash),
-        flags=re.VERBOSE|re.IGNORECASE
+        flags=re.VERBOSE|re.IGNORECASE|re.MULTILINE
     )
 
 
 def get_section_title_pattern(title) -> re.Pattern:
     return re.compile(
         r'''
-            (?:^|(?<=\n))(
+            ^(
                 [ \t]*?\[{}\]
                 (?:
-                    (?:\n(?![ \t]*?\[).*?)*
+                    (?:\n(?![ \t]*?\[).*?$)*
                     (?:\n[$\w].*)+
                 )?
             )\s*
         '''.format(title),
-        flags=re.VERBOSE|re.IGNORECASE
+        flags=re.VERBOSE|re.IGNORECASE|re.MULTILINE
     )
 
 

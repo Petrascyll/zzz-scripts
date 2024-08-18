@@ -12,6 +12,11 @@ import traceback
 from dataclasses import dataclass, field
 from pathlib import Path
 
+# extra precaution to not 'fix' 
+# the same buffer multiple times
+global_modified_buffers: dict[str, list[str]] = {}
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="ZZZ Fix 1.1",
@@ -790,6 +795,7 @@ class add_section_if_missing():
 class update_buffer_element_width():
     old_format: tuple[str]
     new_format: tuple[str]
+    id: str
 
     def execute(self, default_args: DefaultArgs):
         ini  = default_args.ini
@@ -845,9 +851,16 @@ class update_buffer_element_width():
             i, j = resource_section_match.span(1)
             ini.content = ini.content[:i] + modified_resource_section + ini.content[j:]
 
+        global global_modified_buffers
         for buffer_filename in buffer_filenames:
             buffer_filepath = Path(Path(ini.filepath).parent/buffer_filename)
             buffer_dict_key = str(buffer_filepath.absolute())
+
+            if buffer_dict_key not in global_modified_buffers:
+                global_modified_buffers[buffer_dict_key] = []
+            fix_id = f'{self.id}-update_buffer_element_width'
+            if fix_id in global_modified_buffers[buffer_dict_key]: continue
+            else: global_modified_buffers[buffer_dict_key].append(fix_id)
 
             if buffer_dict_key not in ini.modified_buffers:
                 buffer = buffer_filepath.read_bytes()
@@ -885,6 +898,7 @@ class update_buffer_element_width():
 class update_buffer_element_value():
     buffer_format: tuple[str]
     buffer_values: tuple[str]
+    id: str
 
     def execute(self, default_args: DefaultArgs):
         ini  = default_args.ini
@@ -929,10 +943,17 @@ class update_buffer_element_value():
                     if stride != struct.calcsize(buffer_format):
                         print('\t'*tabs+'X Warning: Incorrect Buffer Stride. Bruteforcing...')
 
+        global global_modified_buffers
         for buffer_filename in buffer_filenames:
             buffer_filepath = Path(Path(ini.filepath).parent/buffer_filename)
             buffer_dict_key = str(buffer_filepath.absolute())
 
+            if buffer_dict_key not in global_modified_buffers:
+                global_modified_buffers[buffer_dict_key] = []
+            fix_id = f'{self.id}-update_buffer_element_value'
+            if fix_id in global_modified_buffers[buffer_dict_key]: continue
+            else: global_modified_buffers[buffer_dict_key].append(fix_id)
+        
             if buffer_dict_key not in ini.modified_buffers:
                 buffer = buffer_filepath.read_bytes()
             else:
@@ -1043,9 +1064,9 @@ hash_commands = {
         (log, ('1.0: -> 1.1: Anby Hair Texcoord Hash',)),
         (update_hash, ('39538886',)),
         (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
-        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'))),
+        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
         (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx')))
+        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
     ],
 
 
@@ -1736,9 +1757,9 @@ hash_commands = {
         (log, ('1.0 -> 1.1: Ellen Hair Texcoord Hash',)),
         (update_hash, ('5c33833e',)),
         (log, ('+ Remapping texcoord buffer from stride 24 to 36',)),
-        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee', 'ee'), ('ffff', 'ee', 'ff', 'ee', 'ee'))),
+        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee', 'ee'), ('ffff', 'ee', 'ff', 'ee', 'ee'), '1.1')),
         (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee', 'ee'), ('xxx1', 'xx', 'xx', 'xx', 'xx')))
+        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee', 'ee'), ('xxx1', 'xx', 'xx', 'xx', 'xx'), '1.1'))
     ],
 
 
@@ -1864,9 +1885,9 @@ hash_commands = {
         (log, ('1.0: -> 1.1: Grace Hair Texcoord Hash',)),
         (update_hash, ('d21f32ad',)),
         (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
-        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'))),
+        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
         (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx')))
+        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
     ],
 
 
@@ -2700,9 +2721,9 @@ hash_commands = {
         (log, ('1.0: -> 1.1: Piper Hair Texcoord Hash',)),
         (update_hash, ('fd1b9c29',)),
         (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
-        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'))),
+        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
         (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx')))
+        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
     ],
 
 
@@ -3249,9 +3270,9 @@ hash_commands = {
         (log, ('1.0 -> 1.1: ZhuYuan Hair Texcoord Hash',)),
         (update_hash, ('fdc045fc',)),
         (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
-        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'))),
+        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
         (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx')))
+        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
     ],
 
 

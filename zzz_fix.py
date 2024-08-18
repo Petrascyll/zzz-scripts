@@ -2812,6 +2812,106 @@ hash_commands = {
 
 
 
+    # MARK: Qingyi
+    'f6e96452': [(log, ('1.1: Qingyi Head IB Hash',)), (add_ib_check_if_missing,)],
+    '3cacba0a': [(log, ('1.1: Qingyi Hair IB Hash',)), (add_ib_check_if_missing,)],
+    '195857d8': [(log, ('1.1: Qingyi Body IB Hash',)), (add_ib_check_if_missing,)],
+
+
+    '0b75cd32': [
+        (log,                           ('1.1: Qingyi HeadA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('f6e96452', 'Qingyi.Head.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('a58b5444', 'Qingyi.HeadA.Diffuse.1024')),
+    ],
+    'a58b5444': [
+        (log,                           ('1.1: Qingyi HeadA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('f6e96452', 'Qingyi.Head.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('0b75cd32', 'Qingyi.HeadA.Diffuse.2048')),
+    ],
+
+    '3212a0ca': [
+        (log,                           ('1.1: Qingyi HairA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('3cacba0a', 'Qingyi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('a472db9a', 'Qingyi.HairA.Diffuse.1024')),
+    ],
+    '2910fbd0': [
+        (log,                           ('1.1: Qingyi HairA NormalMap 2048p Hash',)),
+        (add_section_if_missing,        ('3cacba0a', 'Qingyi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('fc1847a9', 'Qingyi.HairA.NormalMap.1024')),
+    ],
+    '6e3ac847': [
+        (log,                           ('1.1: Qingyi HairA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('3cacba0a', 'Qingyi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('683414c1', 'Qingyi.HairA.LightMap.1024')),
+    ],
+    '4a77fd3b': [
+        (log,                           ('1.1: Qingyi HairA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('3cacba0a', 'Qingyi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('bfefa200', 'Qingyi.HairA.MaterialMap.1024')),
+    ],
+    'a472db9a': [
+        (log,                           ('1.1: Qingyi HairA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('3cacba0a', 'Qingyi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('3212a0ca', 'Qingyi.HairA.Diffuse.2048')),
+    ],
+    'fc1847a9': [
+        (log,                           ('1.1: Qingyi HairA NormalMap 1024p Hash',)),
+        (add_section_if_missing,        ('3cacba0a', 'Qingyi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('2910fbd0', 'Qingyi.HairA.NormalMap.2048')),
+    ],
+    '683414c1': [
+        (log,                           ('1.1: Qingyi HairA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('3cacba0a', 'Qingyi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('6e3ac847', 'Qingyi.HairA.LightMap.2048')),
+    ],
+    'bfefa200': [
+        (log,                           ('1.1: Qingyi HairA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('3cacba0a', 'Qingyi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('4a77fd3b', 'Qingyi.HairA.MaterialMap.2048')),
+    ],
+    '1fa7e18e': [
+        (log,                           ('1.1: Qingyi BodyA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('195857d8', 'Qingyi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('aa3c1147', 'Qingyi.BodyA.Diffuse.1024')),
+    ],
+    '542c6b04': [
+        (log,                           ('1.1: Qingyi BodyA NormalMap 2048p Hash',)),
+        (add_section_if_missing,        ('195857d8', 'Qingyi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('4fbf05be', 'Qingyi.BodyA.NormalMap.1024')),
+    ],
+    '35c2a022': [
+        (log,                           ('1.1: Qingyi BodyA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('195857d8', 'Qingyi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('4a484257', 'Qingyi.BodyA.LightMap.1024')),
+    ],
+    '41054bb6': [
+        (log,                           ('1.1: Qingyi BodyA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('195857d8', 'Qingyi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('4e561ee5', 'Qingyi.BodyA.MaterialMap.1024')),
+    ],
+    'aa3c1147': [
+        (log,                           ('1.1: Qingyi BodyA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('195857d8', 'Qingyi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('1fa7e18e', 'Qingyi.BodyA.Diffuse.2048')),
+    ],
+    '4fbf05be': [
+        (log,                           ('1.1: Qingyi BodyA NormalMap 1024p Hash',)),
+        (add_section_if_missing,        ('195857d8', 'Qingyi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('542c6b04', 'Qingyi.BodyA.NormalMap.2048')),
+    ],
+    '4a484257': [
+        (log,                           ('1.1: Qingyi BodyA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('195857d8', 'Qingyi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('35c2a022', 'Qingyi.BodyA.LightMap.2048')),
+    ],
+    '4e561ee5': [
+        (log,                           ('1.1: Qingyi BodyA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('195857d8', 'Qingyi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('41054bb6', 'Qingyi.BodyA.MaterialMap.2048')),
+    ],
+
+
+
     # MARK: Rina
     'cdb2cc7d': [(log, ('1.0: Rina Hair IB Hash',)), (add_ib_check_if_missing,)],
     '2825da1e': [(log, ('1.0: Rina Body IB Hash',)), (add_ib_check_if_missing,)],

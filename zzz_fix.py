@@ -1078,7 +1078,7 @@ hash_commands = {
     '2a29cb9b': [
         (log,                           ('1.0: Anby HeadA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('19df8e84', 'Anby.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('6ea0023c', 'Anby.HeadA.Diffuse.1024')),
+        (multiply_section_if_missing,   ('cc114f4f', 'Anby.HeadA.Diffuse.1024')),
     ],
 
     '6ea0023c': [

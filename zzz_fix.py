@@ -3933,7 +3933,7 @@ def get_section_hash_pattern(hash) -> re.Pattern:
                 (?:\n\s*hash\s*=\s*{}[ \t]*)
                 (?:
                     (?:\n(?![ \t]*?\[).*?$)*
-                    (?:\n[$\w].*)+
+                    (?:\n[\t ]*?[\$\w].*?$)
                 )?
             )\s*
         '''.format(hash),
@@ -3948,7 +3948,8 @@ def get_section_title_pattern(title) -> re.Pattern:
                 [ \t]*?\[{}\]
                 (?:
                     (?:\n(?![ \t]*?\[).*?$)*
-                    (?:\n[$\w].*)+
+                    # (?:\n(?![ \t]*?[\[;\n]).*?$))
+                    (?:\n[\t ]*?[\$\w].*?$)
                 )?
             )\s*
         '''.format(title),

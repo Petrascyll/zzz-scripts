@@ -19,7 +19,7 @@ global_modified_buffers: dict[str, list[str]] = {}
 
 def main():
     parser = argparse.ArgumentParser(
-        prog="ZZZ Fix 1.1",
+        prog="ZZZ Fix 1.2",
         description=('')
     )
 
@@ -790,7 +790,6 @@ class add_section_if_missing():
 #         )
     
 
-
 @dataclass
 class update_buffer_element_width():
     old_format: tuple[str]
@@ -893,6 +892,86 @@ class update_buffer_element_width():
             touched=True
         )
 
+@dataclass
+class zzz_12_shrink_texcoord_color():
+    id: str
+
+    def execute(self, default_args: DefaultArgs):
+        ini  = default_args.ini
+        hash = default_args.hash
+        tabs = default_args.tabs        
+
+        # Need to find all Texcoord Resources used by this hash directly
+        # through TextureOverrides or run through Commandlists... 
+        pattern = get_section_hash_pattern(hash)
+        section_match = pattern.search(ini.content)
+        resources = process_commandlist(ini.content, section_match.group(1), 'vb1')
+
+        # - Match Resource sections to find filenames of buffers 
+        # - Update stride value of resources early instead of iterating again later
+        buffer_filenames = set()
+        line_pattern = re.compile(r'^\s*(filename|stride)\s*=\s*(.*)\s*$', flags=re.IGNORECASE)
+        for resource in resources:
+            pattern = get_section_title_pattern(resource)
+            resource_section_match = pattern.search(ini.content)
+            if not resource_section_match: continue
+
+            modified_resource_section = []
+            for line in resource_section_match.group(1).splitlines():
+                line_match = line_pattern.match(line)
+                if not line_match:
+                    modified_resource_section.append(line)
+
+                # Capture buffer filename
+                elif line_match.group(1) == 'filename':
+                    modified_resource_section.append(line)
+                    buffer_filenames.add(line_match.group(2))
+
+                # Update stride value of resource in ini
+                elif line_match.group(1) == 'stride':
+                    stride = int(line_match.group(2))
+                    modified_resource_section.append('stride = {}'.format(stride - 12))
+                    modified_resource_section.append(';'+line)
+
+            # Update ini
+            modified_resource_section = '\n'.join(modified_resource_section)
+            i, j = resource_section_match.span(1)
+            ini.content = ini.content[:i] + modified_resource_section + ini.content[j:]
+
+        global global_modified_buffers
+        for buffer_filename in buffer_filenames:
+            buffer_filepath = Path(Path(ini.filepath).parent/buffer_filename)
+            buffer_dict_key = str(buffer_filepath.absolute())
+
+            if buffer_dict_key not in global_modified_buffers:
+                global_modified_buffers[buffer_dict_key] = []
+            fix_id = f'{self.id}-zzz_12_shrink_texcoord_color'
+            if fix_id in global_modified_buffers[buffer_dict_key]: continue
+            else: global_modified_buffers[buffer_dict_key].append(fix_id)
+
+            if buffer_dict_key not in ini.modified_buffers:
+                buffer = buffer_filepath.read_bytes()
+            else:
+                buffer = ini.modified_buffers[buffer_dict_key]
+
+            vcount = len(buffer) // stride
+            new_buffer = bytearray()
+            for i in range(vcount):
+                # print(*[ int((f*255)) for f in struct.unpack_from('<4f', buffer, i*stride + 0)])
+                new_buffer.extend(struct.pack(
+                        '<4B',
+                        *[
+                            int(f * 255)
+                            for f in struct.unpack_from('<4f', buffer, i*stride + 0)
+                        ]
+                    ))
+                new_buffer.extend(buffer[i*stride + 16: i*stride + stride])
+            
+            ini.modified_buffers[buffer_dict_key] = new_buffer            
+
+        return ExecutionResult(
+            touched=True
+        )
 
 @dataclass
 class update_buffer_element_value():
@@ -1060,15 +1139,22 @@ hash_commands = {
     '19df8e84': [(log, ('1.0: Anby Head IB Hash',)), (add_ib_check_if_missing,)],
 
 
-    '496a781d': [
-        (log, ('1.0: -> 1.1: Anby Hair Texcoord Hash',)),
-        (update_hash, ('39538886',)),
-        (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
-        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
-        (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
-    ],
+    # reverted in 1.2
+    # '496a781d': [
+    #     (log, ('1.0: -> 1.1: Anby Hair Texcoord Hash',)),
+    #     (update_hash, ('39538886',)),
+    #     (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
+    #     (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
+    #     (log, ('+ Setting texcoord vcolor alpha to 1',)),
+    #     (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
+    # ],
 
+    '39538886': [
+        (log, ('1.1 -> 1.2: Anby Hair Texcoord Hash',)),
+        (update_hash, ('496a781d',)),
+        (log, ('+ Remapping texcoord buffer',)),
+        (zzz_12_shrink_texcoord_color, ('1.2',))
+    ],
 
     'cc114f4f': [
         (log,                           ('1.0: Anby HeadA Diffuse 1024p Hash',)),
@@ -1758,8 +1844,15 @@ hash_commands = {
         (update_hash, ('5c33833e',)),
         (log, ('+ Remapping texcoord buffer from stride 24 to 36',)),
         (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee', 'ee'), ('ffff', 'ee', 'ff', 'ee', 'ee'), '1.1')),
-        (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee', 'ee'), ('xxx1', 'xx', 'xx', 'xx', 'xx'), '1.1'))
+        # (log, ('+ Setting texcoord vcolor alpha to 1',)),
+        # (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee', 'ee'), ('xxx1', 'xx', 'xx', 'xx', 'xx'), '1.1'))
+    ],
+
+    '5c33833e': [
+        (log, ('1.1 -> 1.2: Ellen Hair Texcoord Hash',)),
+        (update_hash, ('a27a8e1a',)),
+        (log, ('+ Remapping texcoord buffer from stride 36 to 24',)),
+        (zzz_12_shrink_texcoord_color, ('1.2',))
     ],
 
 
@@ -1881,15 +1974,43 @@ hash_commands = {
     '4d60568b': [(log, ('1.0: Grace Head IB Hash',)), (add_ib_check_if_missing,)],
 
 
-    '89d903ba': [
-        (log, ('1.0: -> 1.1: Grace Hair Texcoord Hash',)),
-        (update_hash, ('d21f32ad',)),
-        (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
-        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
-        (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
+    # reverted in 1.2
+    # '89d903ba': [
+    #     (log, ('1.0: -> 1.1: Grace Hair Texcoord Hash',)),
+    #     (update_hash, ('d21f32ad',)),
+    #     (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
+    #     (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
+    #     (log, ('+ Setting texcoord vcolor alpha to 1',)),
+    #     (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
+    # ],
+
+    'd21f32ad': [
+        (log, ('1.1 -> 1.2: Grace Hair Texcoord Hash',)),
+        (update_hash, ('89d903ba',)),
+        (log, ('+ Remapping texcoord buffer',)),
+        (zzz_12_shrink_texcoord_color, ('1.2',))
     ],
 
+    'e5e04f6f': [(log, ('1.1 -> 1.2: Grace Body Draw Hash',)),     (update_hash, ('f1cba806',))],
+    '26ffa186': [
+        (log, ('1.1 -> 1.2: Grace Body Position Hash',)),
+        (update_hash, ('8855c5cf',)),
+        (log, ('1.1 -> 1.2: Grace Body Blend Remap',)),
+        (update_buffer_blend_indices, (
+            '8855c5cf',
+            (35, 34, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67,  68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89),
+            (34, 35, 80, 85, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 51, 47, 48, 49, 50, 52, 54, 53, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 66,  65, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 89, 78, 79, 81, 82, 83, 84, 86, 87, 88),
+        ))
+    ],
+    'e536af35': [(log, ('1.1 -> 1.2: Grace Body Texcoord Hash',)), (update_hash, ('4bb45448',))],
+    '0f82a13e': [
+        (log, ('1.1 -> 1.2: Grace Body IB Hash',)),
+        (update_hash, ('8b240678',)),
+        (transfer_indexed_sections, {
+            'src_indices': ['0', '42885'],
+            'trg_indices': ['0', '42927'],
+        })
+    ],
 
     'e75590cb': [
         (log,                           ('1.0: Grace HeadA Diffuse 1024p Hash',)),
@@ -2031,6 +2152,13 @@ hash_commands = {
     '7b16a708': [(log, ('1.1: Jane Hair IB Hash',)), (add_ib_check_if_missing,)],
     'e2c0144e': [(log, ('1.1: Jane Body IB Hash',)), (add_ib_check_if_missing,)],
     'ef86fc9f': [(log, ('1.1: Jane Head IB Hash',)), (add_ib_check_if_missing,)],
+
+    'c8ad344e': [
+        (log, ('1.1 -> 1.2: Jane Hair Texcoord Hash',)),
+        (update_hash, ('257a90d6',)),
+        (log, ('+ Remapping texcoord buffer',)),
+        (zzz_12_shrink_texcoord_color, ('1.2',))
+    ],
 
 
     '689639a5': [
@@ -2805,26 +2933,39 @@ hash_commands = {
     'e11baad9': [(log, ('1.0: Piper Head IB Hash',)), (add_ib_check_if_missing,)],
     
     
-    '4b06ffe6': [
-        (log,                           ('1.0: Piper HeadA Diffuse 1024p Hash',)),
+    '4b06ffe6': [(log, ('1.1 -> 1.2: Piper Face Diffuse 1024p Hash',)),   (update_hash, ('f1c8f946',))],
+    'f1c8f946': [
+        (log,                           ('1.2: Piper HeadA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('e11baad9', 'Piper.Head.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('97a7862e', 'Piper.HeadA.Diffuse.2048')),
     ],
+
     '97a7862e': [
         (log,                           ('1.0: Piper HeadA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('e11baad9', 'Piper.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('4b06ffe6', 'Piper.HeadA.Diffuse.1024')),
+        (multiply_section_if_missing,   (('f1c8f946', '4b06ffe6'), 'Piper.HeadA.Diffuse.1024')),
+    ],
+
+    # Reverted in 1.2
+    # '8b6b17f8': [
+    #     (log, ('1.0: -> 1.1: Piper Hair Texcoord Hash',)),
+    #     (update_hash, ('fd1b9c29',)),
+    #     (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
+    #     (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
+    #     (log, ('+ Setting texcoord vcolor alpha to 1',)),
+    #     (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
+    # ],
+
+    'fd1b9c29': [
+        (log, ('1.1 -> 1.2: Piper Hair Texcoord Hash',)),
+        (update_hash, ('8b6b17f8',)),
+        (log, ('+ Remapping texcoord buffer',)),
+        (zzz_12_shrink_texcoord_color, ('1.2',))
     ],
 
 
-    '8b6b17f8': [
-        (log, ('1.0: -> 1.1: Piper Hair Texcoord Hash',)),
-        (update_hash, ('fd1b9c29',)),
-        (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
-        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
-        (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
-    ],
+    'b2f3e6aa': [(log, ('1.1 -> 1.2: Piper Body Position Hash',)), (update_hash, ('ffe8fea7',)),],
+    'a0d146b3': [(log, ('1.1 -> 1.2: Piper Body Texcoord Hash',)), (update_hash, ('a011f94e',)),],
 
 
     '69ed4d11': [
@@ -2917,7 +3058,6 @@ hash_commands = {
     '3cacba0a': [(log, ('1.1: Qingyi Hair IB Hash',)), (add_ib_check_if_missing,)],
     '195857d8': [(log, ('1.1: Qingyi Body IB Hash',)), (add_ib_check_if_missing,)],
 
-
     '0b75cd32': [
         (log,                           ('1.1: Qingyi HeadA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('f6e96452', 'Qingyi.Head.IB', 'match_priority = 0\n')),
@@ -2927,6 +3067,13 @@ hash_commands = {
         (log,                           ('1.1: Qingyi HeadA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('f6e96452', 'Qingyi.Head.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('0b75cd32', 'Qingyi.HeadA.Diffuse.2048')),
+    ],
+
+    '0643440c': [
+        (log, ('1.1 -> 1.2: Qingyi Hair Texcoord Hash',)),
+        (update_hash, ('53a2b66e',)),
+        (log, ('+ Remapping texcoord buffer',)),
+        (zzz_12_shrink_texcoord_color, ('1.2',))
     ],
 
     '3212a0ca': [
@@ -3567,15 +3714,23 @@ hash_commands = {
     '160872c0': [(log, ('1.0 -> 1.1: ZhuYuan Body Texcoord Hash',)), (update_hash, ('cb885260',))],
 
 
-    'f3c092c5': [
-        (log, ('1.0 -> 1.1: ZhuYuan Hair Texcoord Hash',)),
-        (update_hash, ('fdc045fc',)),
-        (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
-        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
-        (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
-    ],
+    # Reverted in 1.2
+    # Comment out to prevent infinite loop :/
+    # 'f3c092c5': [
+    #     (log, ('1.0 -> 1.1: ZhuYuan Hair Texcoord Hash',)),
+    #     (update_hash, ('fdc045fc',)),
+    #     (log, ('+ Remapping texcoord buffer from stride 20 to 32',)),
+    #     (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee'), ('ffff', 'ee', 'ff', 'ee'), '1.1')),
+    #     (log, ('+ Setting texcoord vcolor alpha to 1',)),
+    #     (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee'), ('xxx1', 'xx', 'xx', 'xx'), '1.1'))
+    # ],
 
+    'fdc045fc': [
+        (log, ('1.1 -> 1.2: ZhuYuan Hair Texcoord Hash',)),
+        (update_hash, ('f3c092c5',)),
+        (log, ('+ Reverting texcoord buffer remap',)),
+        (zzz_12_shrink_texcoord_color, ('1.2',))
+    ],
 
     '138c7d76': [
         (log,                           ('1.0: ZhuYuan HeadA Diffuse 1024p Hash',)),
@@ -3645,25 +3800,30 @@ hash_commands = {
     '18d00ac6': [(log, ('1.0 -> 1.1: ZhuYuan BodyA LightMap 1024p Hash',)),    (update_hash, ('14b638b6',))],
     '1daa379f': [(log, ('1.0 -> 1.1: ZhuYuan BodyA MaterialMap 1024p Hash',)), (update_hash, ('cd4dee2c',))],
 
-    'f6795718': [
-        (log,                           ('1.1: ZhuYuan BodyA Diffuse 1024p Hash',)),
+    'f6795718': [(log, ('1.1 -> 1.2: ZhuYuan BodyA Diffuse 1024p Hash',)),     (update_hash, ('46af14f8',))],
+    '729ea75a': [(log, ('1.1 -> 1.2: ZhuYuan BodyA NormalMap 1024p Hash',)),   (update_hash, ('d5b175bf',))],
+    '14b638b6': [(log, ('1.1 -> 1.2: ZhuYuan BodyA LightMap 1024p Hash',)),    (update_hash, ('fb385169',))],
+    'cd4dee2c': [(log, ('1.1 -> 1.2: ZhuYuan BodyA MaterialMap 1024p Hash',)), (update_hash, ('29e2ebc5',))],
+
+    '46af14f8': [
+        (log,                           ('1.2: ZhuYuan BodyA Diffuse 1024p Hash',)),
         (add_section_if_missing,        (('a4aeb1d5', '6619364f'), 'ZhuYuan.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   (('3ef82f41', 'c88e7660'), 'ZhuYuan.BodyA.Diffuse.2048')),
+        (multiply_section_if_missing,   (('a271e894', '3ef82f41', 'c88e7660'), 'ZhuYuan.BodyA.Diffuse.2048')),
     ],
-    '729ea75a': [
-        (log,                           ('1.1: ZhuYuan BodyA NormalMap 1024p Hash',)),
+    'd5b175bf': [
+        (log,                           ('1.2: ZhuYuan BodyA NormalMap 1024p Hash',)),
         (add_section_if_missing,        (('a4aeb1d5', '6619364f'), 'ZhuYuan.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   (('7195a311', 'a396c53a'), 'ZhuYuan.BodyA.NormalMap.2048')),
+        (multiply_section_if_missing,   (('d81fb56e', '7195a311', 'a396c53a'), 'ZhuYuan.BodyA.NormalMap.2048')),
     ],
-    '14b638b6': [
-        (log,                           ('1.1: ZhuYuan BodyA LightMap 1024p Hash',)),
+    'fb385169': [
+        (log,                           ('1.2: ZhuYuan BodyA LightMap 1024p Hash',)),
         (add_section_if_missing,        (('a4aeb1d5', '6619364f'), 'ZhuYuan.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   (('80ebf536', '13a38449'), 'ZhuYuan.BodyA.LightMap.2048')),
+        (multiply_section_if_missing,   (('d02bc66c', '80ebf536', '13a38449'), 'ZhuYuan.BodyA.LightMap.2048')),
     ],
-    'cd4dee2c': [
-        (log,                           ('1.1: ZhuYuan BodyA MaterialMap 1024p Hash',)),
+    '29e2ebc5': [
+        (log,                           ('1.2: ZhuYuan BodyA MaterialMap 1024p Hash',)),
         (add_section_if_missing,        (('a4aeb1d5', '6619364f'), 'ZhuYuan.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   (('10415de8', 'b4e20235'), 'ZhuYuan.BodyA.MaterialMap.2048')),
+        (multiply_section_if_missing,   (('3e808ef6', '10415de8', 'b4e20235'), 'ZhuYuan.BodyA.MaterialMap.2048')),
     ],
 
     'c88e7660': [(log, ('1.0 -> 1.1: ZhuYuan BodyA Diffuse 2048p Hash',)),     (update_hash, ('3ef82f41',))],
@@ -3671,25 +3831,30 @@ hash_commands = {
     '13a38449': [(log, ('1.0 -> 1.1: ZhuYuan BodyA LightMap 2048p Hash',)),    (update_hash, ('80ebf536',))],
     'b4e20235': [(log, ('1.0 -> 1.1: ZhuYuan BodyA MaterialMap 2048p Hash',)), (update_hash, ('10415de8',))],
 
-    '3ef82f41': [
+    '3ef82f41': [(log, ('1.0 -> 1.1: ZhuYuan BodyA Diffuse 2048p Hash',)),     (update_hash, ('a271e894',))],
+    '7195a311': [(log, ('1.0 -> 1.1: ZhuYuan BodyA NormalMap 2048p Hash',)),   (update_hash, ('d81fb56e',))],
+    '80ebf536': [(log, ('1.0 -> 1.1: ZhuYuan BodyA LightMap 2048p Hash',)),    (update_hash, ('d02bc66c',))],
+    '10415de8': [(log, ('1.0 -> 1.1: ZhuYuan BodyA MaterialMap 2048p Hash',)), (update_hash, ('3e808ef6',))],
+
+    'a271e894': [
         (log,                           ('1.1: ZhuYuan BodyA Diffuse 2048p Hash',)),
         (add_section_if_missing,        (('a4aeb1d5', '6619364f'), 'ZhuYuan.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   (('f6795718', 'b57a8744'), 'ZhuYuan.BodyA.Diffuse.1024')),
+        (multiply_section_if_missing,   (('46af14f8', 'f6795718', 'b57a8744'), 'ZhuYuan.BodyA.Diffuse.1024')),
     ],
-    '7195a311': [
+    'd81fb56e': [
         (log,                           ('1.1: ZhuYuan BodyA NormalMap 2048p Hash',)),
         (add_section_if_missing,        (('a4aeb1d5', '6619364f'), 'ZhuYuan.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   (('729ea75a', '833bafd5'), 'ZhuYuan.BodyA.NormalMap.1024')),
+        (multiply_section_if_missing,   (('d5b175bf', '729ea75a', '833bafd5'), 'ZhuYuan.BodyA.NormalMap.1024')),
     ],
-    '80ebf536': [
+    'd02bc66c': [
         (log,                           ('1.1: ZhuYuan BodyA LightMap 2048p Hash',)),
         (add_section_if_missing,        (('a4aeb1d5', '6619364f'), 'ZhuYuan.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   (('14b638b6', '18d00ac6'), 'ZhuYuan.BodyA.LightMap.1024')),
+        (multiply_section_if_missing,   (('fb385169', '14b638b6', '18d00ac6'), 'ZhuYuan.BodyA.LightMap.1024')),
     ],
-    '10415de8': [
+    '3e808ef6': [
         (log,                           ('1.1: ZhuYuan BodyA MaterialMap 2048p Hash',)),
         (add_section_if_missing,        (('a4aeb1d5', '6619364f'), 'ZhuYuan.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   (('cd4dee2c', '1daa379f'), 'ZhuYuan.BodyA.MaterialMap.1024')),
+        (multiply_section_if_missing,   (('29e2ebc5', 'cd4dee2c', '1daa379f'), 'ZhuYuan.BodyA.MaterialMap.1024')),
     ],
 
 

@@ -2937,11 +2937,12 @@ hash_commands = {
     'f1c8f946': [
         (log,                           ('1.2: Piper HeadA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('e11baad9', 'Piper.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('97a7862e', 'Piper.HeadA.Diffuse.2048')),
+        (multiply_section_if_missing,   (('3b2eb1d9', '97a7862e'), 'Piper.HeadA.Diffuse.2048')),
     ],
 
-    '97a7862e': [
-        (log,                           ('1.0: Piper HeadA Diffuse 2048p Hash',)),
+    '97a7862e': [(log, ('1.1 -> 1.2: Piper Face Diffuse 2048p Hash',)),   (update_hash, ('3b2eb1d9',))],
+    '3b2eb1d9': [
+        (log,                           ('1.2: Piper HeadA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('e11baad9', 'Piper.Head.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   (('f1c8f946', '4b06ffe6'), 'Piper.HeadA.Diffuse.1024')),
     ],

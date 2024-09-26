@@ -1970,7 +1970,7 @@ hash_commands = {
 
     # MARK: Grace
     '89299f56': [(log, ('1.0: Grace Hair IB Hash',)), (add_ib_check_if_missing,)],
-    '0f82a13e': [(log, ('1.0: Grace Body IB Hash',)), (add_ib_check_if_missing,)],
+    '8b240678': [(log, ('1.2: Grace Body IB Hash',)), (add_ib_check_if_missing,)],
     '4d60568b': [(log, ('1.0: Grace Head IB Hash',)), (add_ib_check_if_missing,)],
 
 
@@ -2068,82 +2068,82 @@ hash_commands = {
 
     '6d6ac4f4': [
         (log,                           ('1.0: Grace BodyA Diffuse 2048p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('397a8aed', 'Grace.BodyA.Diffuse.1024')),
     ],
     '397a8aed': [
         (log,                           ('1.0: Grace BodyA Diffuse 1024p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('6d6ac4f4', 'Grace.BodyA.Diffuse.2048')),
     ],
     '993fe3e1': [
         (log,                           ('1.0: Grace BodyA LightMap 2048p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('59dd8899', 'Grace.BodyA.LightMap.1024')),
     ],
     '59dd8899': [
         (log,                           ('1.0: Grace BodyA LightMap 1024p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('993fe3e1', 'Grace.BodyA.LightMap.2048')),
     ],
     'e8345f2c': [
         (log,                           ('1.0: Grace BodyA MaterialMap 2048p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('a6c8c203', 'Grace.BodyA.MaterialMap.1024')),
     ],
     'a6c8c203': [
         (log,                           ('1.0: Grace BodyA MaterialMap 1024p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('e8345f2c', 'Grace.BodyA.MaterialMap.2048')),
     ],
     '1e794b69': [
         (log,                           ('1.0: Grace BodyA NormalMap 2048p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('9abd7824', 'Grace.BodyA.NormalMap.1024')),
     ],
     '9abd7824': [
         (log,                           ('1.0: Grace BodyA NormalMap 1024p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('1e794b69', 'Grace.BodyA.NormalMap.2048')),
     ],
     '210b3ebf': [
         (log,                           ('1.0: Grace BodyB Diffuse 2048p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('21794bd6', 'Grace.BodyB.Diffuse.1024')),
     ],
     '21794bd6': [
         (log,                           ('1.0: Grace BodyB Diffuse 1024p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('210b3ebf', 'Grace.BodyB.Diffuse.2048')),
     ],
     '08082f5f': [
         (log,                           ('1.0: Grace BodyB LightMap 2048p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('a60162a0', 'Grace.BodyB.LightMap.1024')),
     ],
     'a60162a0': [
         (log,                           ('1.0: Grace BodyB LightMap 1024p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('08082f5f', 'Grace.BodyB.LightMap.2048')),
     ],
     'f176398a': [
         (log,                           ('1.0: Grace BodyB MaterialMap 2048p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('b5b88a3f', 'Grace.BodyB.MaterialMap.1024')),
     ],
     'b5b88a3f': [
         (log,                           ('1.0: Grace BodyB MaterialMap 1024p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('f176398a', 'Grace.BodyB.MaterialMap.2048')),
     ],
     '06cb1413': [
         (log,                           ('1.0: Grace BodyB NormalMap 2048p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('c5f703be', 'Grace.BodyB.NormalMap.1024')),
     ],
     'c5f703be': [
         (log,                           ('1.0: Grace BodyB NormalMap 1024p Hash',)),
-        (add_section_if_missing,        ('0f82a13e', 'Grace.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('06cb1413', 'Grace.BodyB.NormalMap.2048')),
     ],
 
@@ -3948,7 +3948,6 @@ def get_section_title_pattern(title) -> re.Pattern:
                 [ \t]*?\[{}\]
                 (?:
                     (?:\n(?![ \t]*?\[).*?$)*
-                    # (?:\n(?![ \t]*?[\[;\n]).*?$))
                     (?:\n[\t ]*?[\$\w].*?$)
                 )?
             )\s*

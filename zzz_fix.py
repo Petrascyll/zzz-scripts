@@ -1713,6 +1713,106 @@ hash_commands = {
 
 
 
+    # MARK: Caesar
+    '7a8fa826': [(log, ('1.2: Caesar Hair IB Hash',)), (add_ib_check_if_missing,)],
+    '92061e5e': [(log, ('1.2: Caesar Body IB Hash',)), (add_ib_check_if_missing,)],
+    '6caaeb53': [(log, ('1.2: Caesar Head IB Hash',)), (add_ib_check_if_missing,)],
+
+    '84d53514': [
+        (log,                           ('1.2: Caesar HeadA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('6caaeb53', 'Caesar.Head.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('13098244', 'Caesar.HeadA.Diffuse.2048')),
+    ],
+    '13098244': [
+        (log,                           ('1.2: Caesar HeadA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('6caaeb53', 'Caesar.Head.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('84d53514', 'Caesar.HeadA.Diffuse.1024')),
+    ],
+
+    '9ce3e80c': [
+        (log,                           ('1.2: Caesar HairA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('7a8fa826', 'Caesar.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('b004ab49', 'Caesar.HairA.Diffuse.1024')),
+    ],
+    'b004ab49': [
+        (log,                           ('1.2: Caesar HairA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('7a8fa826', 'Caesar.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('9ce3e80c', 'Caesar.HairA.Diffuse.2048')),
+    ],
+    'bf19954f': [
+        (log,                           ('1.2: Caesar HairA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('7a8fa826', 'Caesar.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('c7115c4b', 'Caesar.HairA.LightMap.1024')),
+    ],
+    'c7115c4b': [
+        (log,                           ('1.2: Caesar HairA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('7a8fa826', 'Caesar.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('bf19954f', 'Caesar.HairA.LightMap.2048')),
+    ],
+    '350b827e': [
+        (log,                           ('1.2: Caesar HairA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('7a8fa826', 'Caesar.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('2204f89a', 'Caesar.HairA.MaterialMap.1024')),
+    ],
+    '2204f89a': [
+        (log,                           ('1.2: Caesar HairA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('7a8fa826', 'Caesar.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('350b827e', 'Caesar.HairA.MaterialMap.2048')),
+    ],
+    '10af3807': [
+        (log,                           ('1.2: Caesar HairA NormalMap 2048p Hash',)),
+        (add_section_if_missing,        ('7a8fa826', 'Caesar.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('e17b3529', 'Caesar.HairA.NormalMap.1024')),
+    ],
+    'e17b3529': [
+        (log,                           ('1.2: Caesar HairA NormalMap 1024p Hash',)),
+        (add_section_if_missing,        ('7a8fa826', 'Caesar.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('10af3807', 'Caesar.HairA.NormalMap.2048')),
+    ],
+
+    '5e2cea1a': [
+        (log,                           ('1.2: Caesar BodyA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('f4b78da0', 'Caesar.BodyA.Diffuse.1024')),
+    ],
+    'f4b78da0': [
+        (log,                           ('1.2: Caesar BodyA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('5e2cea1a', 'Caesar.BodyA.Diffuse.2048')),
+    ],
+    '6296d481': [
+        (log,                           ('1.2: Caesar BodyA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('a9e24ba0', 'Caesar.BodyA.LightMap.1024')),
+    ],
+    'a9e24ba0': [
+        (log,                           ('1.2: Caesar BodyA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('6296d481', 'Caesar.BodyA.LightMap.2048')),
+    ],
+    'd5d89d5b': [
+        (log,                           ('1.2: Caesar BodyA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('328bc108', 'Caesar.BodyA.MaterialMap.1024')),
+    ],
+    '328bc108': [
+        (log,                           ('1.2: Caesar BodyA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('d5d89d5b', 'Caesar.BodyA.MaterialMap.2048')),
+    ],
+    'c1f1e12f': [
+        (log,                           ('1.2: Caesar BodyA NormalMap 2048p Hash',)),
+        (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('8cdf95d0', 'Caesar.BodyA.NormalMap.1024')),
+    ],
+    '8cdf95d0': [
+        (log,                           ('1.2: Caesar BodyA NormalMap 1024p Hash',)),
+        (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('c1f1e12f', 'Caesar.BodyA.NormalMap.2048')),
+    ],
+
+
+
     # MARK: Corin
     '5a839fb2': [(log, ('1.0: Corin Hair IB Hash',)), (add_ib_check_if_missing,)],
     'e74620b5': [(log, ('1.0: Corin Body IB Hash',)), (add_ib_check_if_missing,)],

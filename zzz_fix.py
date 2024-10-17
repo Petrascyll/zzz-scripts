@@ -1712,6 +1712,105 @@ hash_commands = {
     ],
 
 
+    # MARK: Burnice
+    'f779fb81': [(log, ('1.2: Burnice Hair IB Hash',)), (add_ib_check_if_missing,)],
+    'af63e974': [(log, ('1.2: Burnice Body IB Hash',)), (add_ib_check_if_missing,)],
+    'b3f6fcb3': [(log, ('1.2: Burnice Head IB Hash',)), (add_ib_check_if_missing,)],
+
+    'c9c87bb1': [
+        (log,                           ('1.2: Burnice HeadA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('b3f6fcb3', 'Burnice.Head.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('e338bb82', 'Burnice.HeadA.Diffuse.2048')),
+    ],
+    'e338bb82': [
+        (log,                           ('1.2: Burnice HeadA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('b3f6fcb3', 'Burnice.Head.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('c9c87bb1', 'Burnice.HeadA.Diffuse.1024')),
+    ],
+
+    '609b50a9': [
+        (log,                           ('1.2: Burnice HairA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('f779fb81', 'Burnice.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('4568c6b3', 'Burnice.HairA.Diffuse.1024')),
+    ],
+    '4568c6b3': [
+        (log,                           ('1.2: Burnice HairA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('f779fb81', 'Burnice.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('609b50a9', 'Burnice.HairA.Diffuse.2048')),
+    ],
+    'bf0042b9': [
+        (log,                           ('1.2: Burnice HairA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('f779fb81', 'Burnice.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('08770e8c', 'Burnice.HairA.LightMap.1024')),
+    ],
+    '08770e8c': [
+        (log,                           ('1.2: Burnice HairA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('f779fb81', 'Burnice.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('bf0042b9', 'Burnice.HairA.LightMap.2048')),
+    ],
+    '5f2840f1': [
+        (log,                           ('1.2: Burnice HairA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('f779fb81', 'Burnice.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('3ae3ea20', 'Burnice.HairA.MaterialMap.1024')),
+    ],
+    '3ae3ea20': [
+        (log,                           ('1.2: Burnice HairA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('f779fb81', 'Burnice.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('5f2840f1', 'Burnice.HairA.MaterialMap.2048')),
+    ],
+    '438cf629': [
+        (log,                           ('1.2: Burnice HairA NormalMap 2048p Hash',)),
+        (add_section_if_missing,        ('f779fb81', 'Burnice.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('0050e0d2', 'Burnice.HairA.NormalMap.1024')),
+    ],
+    '0050e0d2': [
+        (log,                           ('1.2: Burnice HairA NormalMap 1024p Hash',)),
+        (add_section_if_missing,        ('f779fb81', 'Burnice.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('438cf629', 'Burnice.HairA.NormalMap.2048')),
+    ],
+
+    '50bf6521': [
+        (log,                           ('1.2: Burnice BodyA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('af63e974', 'Burnice.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('f0e67001', 'Burnice.BodyA.Diffuse.1024')),
+    ],
+    'f0e67001': [
+        (log,                           ('1.2: Burnice BodyA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('af63e974', 'Burnice.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('50bf6521', 'Burnice.BodyA.Diffuse.2048')),
+    ],
+    'f4e05ee7': [
+        (log,                           ('1.2: Burnice BodyA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('af63e974', 'Burnice.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('0a3ba8ac', 'Burnice.BodyA.LightMap.1024')),
+    ],
+    '0a3ba8ac': [
+        (log,                           ('1.2: Burnice BodyA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('af63e974', 'Burnice.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('f4e05ee7', 'Burnice.BodyA.LightMap.2048')),
+    ],
+    'c321481d': [
+        (log,                           ('1.2: Burnice BodyA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('af63e974', 'Burnice.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('e37e7622', 'Burnice.BodyA.MaterialMap.1024')),
+    ],
+    'e37e7622': [
+        (log,                           ('1.2: Burnice BodyA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('af63e974', 'Burnice.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('c321481d', 'Burnice.BodyA.MaterialMap.2048')),
+    ],
+    '0f2c69e2': [
+        (log,                           ('1.2: Burnice BodyA NormalMap 2048p Hash',)),
+        (add_section_if_missing,        ('af63e974', 'Burnice.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('0c4f338a', 'Burnice.BodyA.NormalMap.1024')),
+    ],
+    '0c4f338a': [
+        (log,                           ('1.2: Burnice BodyA NormalMap 1024p Hash',)),
+        (add_section_if_missing,        ('af63e974', 'Burnice.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('0f2c69e2', 'Burnice.BodyA.NormalMap.2048')),
+    ],
+
+
 
     # MARK: Caesar
     '7a8fa826': [(log, ('1.2: Caesar Hair IB Hash',)), (add_ib_check_if_missing,)],

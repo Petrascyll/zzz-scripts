@@ -19,7 +19,7 @@ global_modified_buffers: dict[str, list[str]] = {}
 
 def main():
     parser = argparse.ArgumentParser(
-        prog="ZZZ Fix 1.2",
+        prog="ZZZ Fix 1.3",
         description=('')
     )
 
@@ -887,6 +887,108 @@ class update_buffer_element_width():
             #     raise Exception('Byte width Update failed')
             
             ini.modified_buffers[buffer_dict_key] = new_buffer
+
+        return ExecutionResult(
+            touched=True
+        )
+
+@dataclass
+class zzz_13_remap_texcoord():
+    id: str
+    old_format: tuple[str] # = ('4B','2e','2f','2e')
+    new_format: tuple[str] # = ('4B','2f','2f','2f')
+
+    def execute(self, default_args: DefaultArgs):
+        ini  = default_args.ini
+        hash = default_args.hash
+        tabs = default_args.tabs
+
+        # Precompute new buffer strides and offsets
+        # Check if existing buffer stride matches our expectations
+        # before remapping it
+        if (len(self.old_format) != len(self.new_format)): raise Exception()
+        old_stride = struct.calcsize('<' + ''.join(self.old_format))
+        new_stride = struct.calcsize('<' + ''.join(self.new_format))
+
+        offset = 0
+        offsets = [0]
+        for format_chunk in self.old_format:
+            offset += struct.calcsize(f'<{format_chunk}')
+            offsets.append(offset)
+
+        # Debugging
+        # print(f'\t\tOld Format stride: {struct.calcsize('<' + ''.join(self.old_format))}')
+        # print(f'\t\tNew Format stride: {struct.calcsize('<' + ''.join(self.new_format))}')
+        # print(f'\t\tBuffer Stride: {stride}')
+        # print(f'\t\tOffsets: {offsets}')
+
+        # Need to find all Texcoord Resources used by this hash directly
+        # through TextureOverrides or run through Commandlists... 
+        pattern = get_section_hash_pattern(hash)
+        section_match = pattern.search(ini.content)
+        resources = process_commandlist(ini.content, section_match.group(1), 'vb1')
+
+        # - Match Resource sections to find filenames of buffers 
+        # - Update stride value of resources early instead of iterating again later
+        buffer_filenames = set()
+        line_pattern = re.compile(r'^\s*(filename|stride)\s*=\s*(.*)\s*$', flags=re.IGNORECASE)
+        for resource in resources:
+            pattern = get_section_title_pattern(resource)
+            resource_section_match = pattern.search(ini.content)
+            if not resource_section_match: continue
+
+            modified_resource_section = []
+            for line in resource_section_match.group(1).splitlines():
+                line_match = line_pattern.match(line)
+                if not line_match:
+                    modified_resource_section.append(line)
+
+                # Capture buffer filename
+                elif line_match.group(1) == 'filename':
+                    modified_resource_section.append(line)
+                    buffer_filenames.add(line_match.group(2))
+
+                # Update stride value of resource in ini
+                elif line_match.group(1) == 'stride':
+                    stride = int(line_match.group(2))
+                    if stride != old_stride:
+                        print('{}X WARNING [{}]! Expected buffer stride {} but got {} instead. Overriding and continuing.'.format('\t'*tabs, resource, old_stride, stride))
+                    #     raise Exception('Remap failed for {}! Expected buffer stride {} but got {} instead.'.format(resource, old_stride, stride))
+
+                    modified_resource_section.append('stride = {}'.format(new_stride))
+                    modified_resource_section.append(';'+line)
+
+            # Update ini
+            modified_resource_section = '\n'.join(modified_resource_section)
+            i, j = resource_section_match.span(1)
+            ini.content = ini.content[:i] + modified_resource_section + ini.content[j:]
+
+        global global_modified_buffers
+        for buffer_filename in buffer_filenames:
+            buffer_filepath = Path(Path(ini.filepath).parent/buffer_filename)
+            buffer_dict_key = str(buffer_filepath.absolute())
+
+            if buffer_dict_key not in global_modified_buffers:
+                global_modified_buffers[buffer_dict_key] = []
+            fix_id = f'{self.id}-texcoord_remap'
+            if fix_id in global_modified_buffers[buffer_dict_key]: continue
+            else: global_modified_buffers[buffer_dict_key].append(fix_id)
+
+            if buffer_dict_key not in ini.modified_buffers:
+                buffer = buffer_filepath.read_bytes()
+            else:
+                buffer = ini.modified_buffers[buffer_dict_key]
+
+            vcount = len(buffer) // stride
+            new_buffer = bytearray()
+            for i in range(vcount):
+                for j, (old_chunk, new_chunk) in enumerate(zip(self.old_format, self.new_format)):
+                    if offsets[j] < stride and offsets[j+1] <= stride:
+                        new_buffer.extend(struct.pack(f'<{new_chunk}', *struct.unpack_from(f'<{old_chunk}', buffer, i*stride+offsets[j])))
+                    else: # cope
+                        new_buffer.extend(struct.pack(f'<{new_chunk}', *([0] * int(new_chunk[0]))))
+            
+            ini.modified_buffers[buffer_dict_key] = new_buffer    
 
         return ExecutionResult(
             touched=True
@@ -1817,6 +1919,27 @@ hash_commands = {
     '92061e5e': [(log, ('1.2: Caesar Body IB Hash',)), (add_ib_check_if_missing,)],
     '6caaeb53': [(log, ('1.2: Caesar Head IB Hash',)), (add_ib_check_if_missing,)],
 
+    'af291513': [
+        (log,            ('1.2 -> 1.3: Caesar Hair Texcoord Hash',)),
+        (update_hash,    ('72537fa3',)),
+        (log,            ('+ Remapping texcoord buffer',)),
+        (zzz_13_remap_texcoord, (
+            '13_Caesar_hair',
+            ('4B','2e','2f','2e'),
+            ('4B','2f','2f','2f')
+        )),
+    ],
+    '3b2a70a5': [
+        (log,            ('1.2 -> 1.3: Caesar Body Texcoord Hash',)),
+        (update_hash,    ('0ca81129',)),
+        (log,            ('+ Remapping texcoord buffer',)),
+        (zzz_13_remap_texcoord, (
+            '13_Caesar_body',
+            ('4B','2e','2f','2e', '2e'),
+            ('4B','2f','2f','2f', '2f')
+        )),
+    ],
+
     '84d53514': [
         (log,                           ('1.2: Caesar HeadA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('6caaeb53', 'Caesar.Head.IB', 'match_priority = 0\n')),
@@ -2460,6 +2583,27 @@ hash_commands = {
     '3afb3865': [(log, ('1.0: Koleda Body IB Hash',)), (add_ib_check_if_missing,)],
     '0e74656e': [(log, ('1.0: Koleda Head IB Hash',)), (add_ib_check_if_missing,)],
     
+
+    '1a9b182a': [
+        (log,            ('1.2 -> 1.3: Koleda Hair Texcoord Hash',)),
+        (update_hash,    ('e35571a9',)),
+        (log,            ('+ Remapping texcoord buffer',)),
+        (zzz_13_remap_texcoord, (
+            '13_koleda_hair',
+            ('4B','2e','2f','2e'),
+            ('4B','2f','2f','2f')
+        )),
+    ],
+    'e3021a32': [
+        (log,            ('1.2 -> 1.3: Koleda Body Texcoord Hash',)),
+        (update_hash,    ('38b31082',)),
+        (log,            ('+ Remapping texcoord buffer',)),
+        (zzz_13_remap_texcoord, (
+            '13_koleda_body',
+            ('4B','2e','2f','2e'),
+            ('4B','2f','2f','2f')
+        )),
+    ],
 
     'f1045670': [
         (log,                           ('1.0: Koleda HeadA Diffuse 1024p Hash',)),
@@ -3163,10 +3307,10 @@ hash_commands = {
         (zzz_12_shrink_texcoord_color, ('1.2',))
     ],
 
-
     'b2f3e6aa': [(log, ('1.1 -> 1.2: Piper Body Position Hash',)), (update_hash, ('ffe8fea7',)),],
     'a0d146b3': [(log, ('1.1 -> 1.2: Piper Body Texcoord Hash',)), (update_hash, ('a011f94e',)),],
-
+    'a011f94e': [(log, ('1.2 -> 1.3: Piper Body Texcoord Hash',)), (update_hash, ('6357b120',)),],
+    '764276de': [(log, ('1.2 -> 1.3: Piper Body Blend Hash',)),    (update_hash, ('3d329807',)),],
 
     '69ed4d11': [
         (log,                           ('1.0: Piper HairA Diffuse 2048p Hash',)),
@@ -3210,12 +3354,15 @@ hash_commands = {
     ],
 
 
+    '621564e5': [(log, ('1.2 -> 1.3: Piper BodyA Diffuse 1024p Hash',)), (update_hash, ('b450949d',))],
+    # TODO get piper diffuse 2048p hash
+
     'b4b74e7e': [
         (log,                           ('1.0: Piper BodyA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('585da98b', 'Piper.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('621564e5', 'Piper.BodyA.Diffuse.1024')),
+        (multiply_section_if_missing,   (('b450949d', '621564e5'), 'Piper.BodyA.Diffuse.1024')),
     ],
-    '621564e5': [
+    'b450949d': [
         (log,                           ('1.0: Piper BodyA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('585da98b', 'Piper.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('b4b74e7e', 'Piper.BodyA.Diffuse.2048')),

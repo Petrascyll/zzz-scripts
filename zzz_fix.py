@@ -4109,12 +4109,12 @@ hash_commands = {
     '138c7d76': [
         (log,                           ('1.0: ZhuYuan HeadA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('f1c241b7', 'ZhuYuan.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('a1eabb9f', 'ZhuYuan.HairA.Diffuse.2048')),
+        (multiply_section_if_missing,   ('a1eabb9f', 'ZhuYuan.HeadA.Diffuse.2048')),
     ],
     'a1eabb9f': [
         (log,                           ('1.0: ZhuYuan HeadA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('f1c241b7', 'ZhuYuan.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('138c7d76', 'ZhuYuan.HairA.Diffuse.1024')),
+        (multiply_section_if_missing,   ('138c7d76', 'ZhuYuan.HeadA.Diffuse.1024')),
     ],
 
 

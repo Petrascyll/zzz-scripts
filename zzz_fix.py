@@ -4073,6 +4073,106 @@ hash_commands = {
 
 
 
+    # MARK: Yanagi
+    '9e12899f': [(log, ('1.3: Yanagi Hair IB Hash',)),    (add_ib_check_if_missing,)],
+    'f478ee4c': [(log, ('1.3: Yanagi Body IB Hash',)),    (add_ib_check_if_missing,)],
+    # '27d49f0b': [(log, ('1.3: Yanagi Sheathe IB Hash',)), (add_ib_check_if_missing,)],
+    # '2d7f2223': [(log, ('1.3: Yanagi Weapon IB Hash',)),  (add_ib_check_if_missing,)],
+    # '0817204c': [(log, ('1.3: Yanagi Face IB Hash',)),    (add_ib_check_if_missing,)],
+
+
+    # 'cfe7ab46': [
+    #     (log,                           ('1.3: Yanagi FaceA Diffuse 1024p Hash',)),
+    #     (add_section_if_missing,        ('0817204c', 'Yanagi.Face.IB', 'match_priority = 0\n')),
+    #     # (multiply_section_if_missing,   ('a1eabb9f', 'Yanagi.FaceA.Diffuse.2048')),
+    # ],
+
+
+    '4edb5c79': [
+        (log,                           ('1.3: Yanagi HairA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('9e12899f', 'Yanagi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('ac5f6d76', 'Yanagi.HairA.Diffuse.2048')),
+    ],
+    '5a43d985': [
+        (log,                           ('1.3: Yanagi HairA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('9e12899f', 'Yanagi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('99cfa935', 'Yanagi.HairA.LightMap.2048')),
+    ],
+    '486e3c42': [
+        (log,                           ('1.3: Yanagi HairA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('9e12899f', 'Yanagi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('f80b57f0', 'Yanagi.HairA.MaterialMap.2048')),
+    ],
+    'ac5f6d76': [
+        (log,                           ('1.3: Yanagi HairA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('9e12899f', 'Yanagi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('4edb5c79', 'Yanagi.HairA.Diffuse.2048')),
+    ],
+    '99cfa935': [
+        (log,                           ('1.3: Yanagi HairA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('9e12899f', 'Yanagi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('5a43d985', 'Yanagi.HairA.LightMap.2048')),
+    ],
+    'f80b57f0': [
+        (log,                           ('1.3: Yanagi HairA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('9e12899f', 'Yanagi.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('486e3c42', 'Yanagi.HairA.MaterialMap.2048')),
+    ],
+
+
+    'c119dbd7': [
+        (log,                           ('1.3: Yanagi BodyA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('f478ee4c', 'Yanagi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('c7c4f5c5', 'Yanagi.BodyA.Diffuse.2048')),
+    ],
+    'f60602ec': [
+        (log,                           ('1.3: Yanagi BodyA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('f478ee4c', 'Yanagi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('08933e28', 'Yanagi.BodyA.LightMap.2048')),
+    ],
+    'b29f0188': [
+        (log,                           ('1.3: Yanagi BodyA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('f478ee4c', 'Yanagi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('c2ae5d2b', 'Yanagi.BodyA.MaterialMap.2048')),
+    ],
+    'c7c4f5c5': [
+        (log,                           ('1.3: Yanagi BodyA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('f478ee4c', 'Yanagi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('c119dbd7', 'Yanagi.BodyA.Diffuse.2048')),
+    ],
+    '08933e28': [
+        (log,                           ('1.3: Yanagi BodyA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('f478ee4c', 'Yanagi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('f60602ec', 'Yanagi.BodyA.LightMap.2048')),
+    ],
+    'c2ae5d2b': [
+        (log,                           ('1.3: Yanagi BodyA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('f478ee4c', 'Yanagi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('b29f0188', 'Yanagi.BodyA.MaterialMap.2048')),
+    ],
+
+
+    # 'aaccff06': [
+    #     (log,                           ('1.3: Yanagi WeaponA, SheatheA Diffuse 1024p Hash',)),
+    #     (add_section_if_missing,        ('2d7f2223', 'Yanagi.Weapon.IB', 'match_priority = 0\n')),
+    #     (add_section_if_missing,        ('27d49f0b', 'Yanagi.Sheathe.IB', 'match_priority = 0\n')),
+    #     # (multiply_section_if_missing,   ('a1eabb9f', 'Yanagi.WeaponA.Diffuse.2048')),
+    # ],
+    # '8ef68839': [
+    #     (log,                           ('1.3: Yanagi WeaponA, SheatheA LightMap 1024p Hash',)),
+    #     (add_section_if_missing,        ('2d7f2223', 'Yanagi.Weapon.IB', 'match_priority = 0\n')),
+    #     (add_section_if_missing,        ('27d49f0b', 'Yanagi.Sheathe.IB', 'match_priority = 0\n')),
+    #     # (multiply_section_if_missing,   ('a1eabb9f', 'Yanagi.WeaponA.LightMap.2048')),
+    # ],
+    # 'ecd8605e': [
+    #     (log,                           ('1.3: Yanagi WeaponA, SheatheA MaterialMap 1024p Hash',)),
+    #     (add_section_if_missing,        ('2d7f2223', 'Yanagi.Weapon.IB', 'match_priority = 0\n')),
+    #     (add_section_if_missing,        ('27d49f0b', 'Yanagi.Sheathe.IB', 'match_priority = 0\n')),
+    #     # (multiply_section_if_missing,   ('a1eabb9f', 'Yanagi.WeaponA.MaterialMap.2048')),
+    # ],
+
+
+
     # MARK: ZhuYuan
     '6619364f': [(log, ('1.1: ZhuYuan Body IB Hash',)),         (add_ib_check_if_missing,)],
     '9821017e': [(log, ('1.0: ZhuYuan Hair IB Hash',)),         (add_ib_check_if_missing,)],

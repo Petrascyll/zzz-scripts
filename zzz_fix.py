@@ -983,8 +983,25 @@ class zzz_13_remap_texcoord():
             new_buffer = bytearray()
             for i in range(vcount):
                 for j, (old_chunk, new_chunk) in enumerate(zip(self.old_format, self.new_format)):
+
                     if offsets[j] < stride and offsets[j+1] <= stride:
-                        new_buffer.extend(struct.pack(f'<{new_chunk}', *struct.unpack_from(f'<{old_chunk}', buffer, i*stride+offsets[j])))
+
+                        if old_chunk != new_chunk:
+                            # HardCode VColor Remap
+                            if (j == 0 and old_chunk == '4B' and new_chunk == '4f'):
+                                new_buffer.extend(struct.pack('<4f', *[b/255 for b in struct.unpack_from('<4B', buffer, i*stride + 0)]))
+                            elif (j == 0 and old_chunk == '4f' and new_chunk == '4B'):
+                                new_buffer.extend(struct.pack('<4B', *[int(b*255) for b in struct.unpack_from('<4f', buffer, i*stride + 0)]))
+
+                            # General Element Remap
+                            else:
+                                new_buffer.extend(struct.pack(f'<{new_chunk}', *struct.unpack_from(f'<{old_chunk}', buffer, i*stride+offsets[j])))
+
+                        # No Element Remap Needed
+                        else:
+                            new_buffer.extend(buffer[i*stride + offsets[j]: i*stride + offsets[j+1]])
+
+                    # Mod texcoord vertex data does not saturate the expected old stride
                     else: # cope
                         new_buffer.extend(struct.pack(f'<{new_chunk}', *([0] * int(new_chunk[0]))))
             
@@ -3641,6 +3658,16 @@ hash_commands = {
     '00172ec3': [(log, ('1.1: Seth Body IB Hash',)), (add_ib_check_if_missing,)],
     '52f5aa74': [(log, ('1.1: Seth Head IB Hash',)), (add_ib_check_if_missing,)],
 
+    'a91eeef2': [
+        (log,            ('1.2 -> 1.3: Seth Hair Texcoord Hash',)),
+        (update_hash,    ('a72f760f',)),
+        (log,            ('+ Remapping texcoord buffer',)),
+        (zzz_13_remap_texcoord, (
+            '13_Seth_Hair',
+            ('4B','2e','2f','2e'),
+            ('4f','2e','2f','2e')
+        )),
+    ],
 
     'fe5b7534': [
         (log,                           ('1.1: Seth HeadA Diffuse 1024p Hash',)),

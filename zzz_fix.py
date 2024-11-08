@@ -4105,15 +4105,19 @@ hash_commands = {
     'f478ee4c': [(log, ('1.3: Yanagi Body IB Hash',)),    (add_ib_check_if_missing,)],
     # '27d49f0b': [(log, ('1.3: Yanagi Sheathe IB Hash',)), (add_ib_check_if_missing,)],
     # '2d7f2223': [(log, ('1.3: Yanagi Weapon IB Hash',)),  (add_ib_check_if_missing,)],
-    # '0817204c': [(log, ('1.3: Yanagi Face IB Hash',)),    (add_ib_check_if_missing,)],
+    '0817204c': [(log, ('1.3: Yanagi Face IB Hash',)),    (add_ib_check_if_missing,)],
 
 
-    # 'cfe7ab46': [
-    #     (log,                           ('1.3: Yanagi FaceA Diffuse 1024p Hash',)),
-    #     (add_section_if_missing,        ('0817204c', 'Yanagi.Face.IB', 'match_priority = 0\n')),
-    #     # (multiply_section_if_missing,   ('a1eabb9f', 'Yanagi.FaceA.Diffuse.2048')),
-    # ],
-
+    'cfe7ab46': [
+        (log,                           ('1.3: Yanagi FaceA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('0817204c', 'Yanagi.Face.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('95d9e92e', 'Yanagi.FaceA.Diffuse.2048')),
+    ],
+    '95d9e92e': [
+        (log,                           ('1.3: Yanagi FaceA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('0817204c', 'Yanagi.Face.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('cfe7ab46', 'Yanagi.FaceA.Diffuse.1024')),
+    ],
 
     '4edb5c79': [
         (log,                           ('1.3: Yanagi HairA Diffuse 1024p Hash',)),

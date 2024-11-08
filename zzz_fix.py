@@ -3990,6 +3990,10 @@ hash_commands = {
         # (update_buffer_element_value, (('BBBB',), ('wise',)))
     ],
 
+    '67f21c9f': [(log, ('1.2 -> 1.3: Wise Body Position Hash',)), (update_hash, ('f6c5b9f3',))],
+    'f425bd04': [(log, ('1.2 -> 1.3: Wise Body Texcoord Hash',)), (update_hash, ('a9d5b70d',))],
+
+    'cb22cb95': [(log, ('1.2 -> 1.3: Wise Bag Texcoord Hash',)), (update_hash, ('2ae08ae7',))],
 
     '6c4ae8ce': [(log, ('1.0 -> 1.1: Wise HeadA Diffuse 1024p Hash',)), (update_hash, ('588d7d2d',))],
 

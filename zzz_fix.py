@@ -2708,6 +2708,117 @@ hash_commands = {
     ],
 
 
+    # MARK: Lighter
+    '542b8aa9': [(log, ('1.3: Lighter Hair IB Hash',)),    (add_ib_check_if_missing,)],
+    '8899e0fd': [(log, ('1.3: Lighter Body IB Hash',)),    (add_ib_check_if_missing,)],
+    '018b03f0': [(log, ('1.3: Lighter Arm IB Hash',)),     (add_ib_check_if_missing,)],
+    '039f30cf': [(log, ('1.3: Lighter Face IB Hash',)),    (add_ib_check_if_missing,)],
+
+    '8ec33dd0': [
+        (log,                           ('1.3: Lighter FaceA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('039f30cf', 'Lighter.Face.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('4524e91a', 'Lighter.FaceA.Diffuse.2048')),
+    ],
+    '4524e91a': [
+        (log,                           ('1.3: Lighter FaceA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('039f30cf', 'Lighter.Face.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('8ec33dd0', 'Lighter.FaceA.Diffuse.1024')),
+    ],
+
+    '1cd2d442': [
+        (log,                           ('1.3: Lighter HairA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('542b8aa9', 'Lighter.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('c5d60a1d', 'Lighter.HairA.Diffuse.2048')),
+    ],
+    '62ec7f01': [
+        (log,                           ('1.3: Lighter HairA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('542b8aa9', 'Lighter.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('6d3f91bc', 'Lighter.HairA.LightMap.2048')),
+    ],
+    '8687f7b8': [
+        (log,                           ('1.3: Lighter HairA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('542b8aa9', 'Lighter.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('d5ba9ea6', 'Lighter.HairA.MaterialMap.2048')),
+    ],
+    'c5d60a1d': [
+        (log,                           ('1.3: Lighter HairA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('542b8aa9', 'Lighter.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('1cd2d442', 'Lighter.HairA.Diffuse.1024')),
+    ],
+    '6d3f91bc': [
+        (log,                           ('1.3: Lighter HairA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('542b8aa9', 'Lighter.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('62ec7f01', 'Lighter.HairA.LightMap.1024')),
+    ],
+    'd5ba9ea6': [
+        (log,                           ('1.3: Lighter HairA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('542b8aa9', 'Lighter.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('8687f7b8', 'Lighter.HairA.MaterialMap.1024')),
+    ],
+
+    'be46890b': [
+        (log,                           ('1.3: Lighter BodyA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('8899e0fd', 'Lighter.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('5ed96bf2', 'Lighter.BodyA.Diffuse.2048')),
+    ],
+    '5b828635': [
+        (log,                           ('1.3: Lighter BodyA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('8899e0fd', 'Lighter.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('da6f4dc0', 'Lighter.BodyA.LightMap.2048')),
+    ],
+    '65f3bb7c': [
+        (log,                           ('1.3: Lighter BodyA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('8899e0fd', 'Lighter.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('94aebd7e', 'Lighter.BodyA.MaterialMap.2048')),
+    ],
+    '5ed96bf2': [
+        (log,                           ('1.3: Lighter BodyA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('8899e0fd', 'Lighter.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('be46890b', 'Lighter.BodyA.Diffuse.1024')),
+    ],
+    'da6f4dc0': [
+        (log,                           ('1.3: Lighter BodyA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('8899e0fd', 'Lighter.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('5b828635', 'Lighter.BodyA.LightMap.1024')),
+    ],
+    '94aebd7e': [
+        (log,                           ('1.3: Lighter BodyA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('8899e0fd', 'Lighter.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('65f3bb7c', 'Lighter.BodyA.MaterialMap.1024')),
+    ],
+
+    '6506987b': [
+        (log,                           ('1.3: Lighter ArmA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('018b03f0', 'Lighter.Arm.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('8b854866', 'Lighter.ArmA.Diffuse.2048')),
+    ],
+    '939a2e18': [
+        (log,                           ('1.3: Lighter ArmA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('018b03f0', 'Lighter.Arm.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('547cbcd8', 'Lighter.ArmA.LightMap.2048')),
+    ],
+    '1684d3e4': [
+        (log,                           ('1.3: Lighter ArmA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('018b03f0', 'Lighter.Arm.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('3617c303', 'Lighter.ArmA.MaterialMap.2048')),
+    ],
+    '8b854866': [
+        (log,                           ('1.3: Lighter ArmA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('018b03f0', 'Lighter.Arm.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('6506987b', 'Lighter.ArmA.Diffuse.1024')),
+    ],
+    '547cbcd8': [
+        (log,                           ('1.3: Lighter ArmA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('018b03f0', 'Lighter.Arm.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('939a2e18', 'Lighter.ArmA.LightMap.1024')),
+    ],
+    '3617c303': [
+        (log,                           ('1.3: Lighter ArmA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('018b03f0', 'Lighter.Arm.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('1684d3e4', 'Lighter.ArmA.MaterialMap.1024')),
+    ],
+
+
 
     # MARK: Lucy
     '69ad9d08': [(log, ('1.3: Lucy Hair IB Hash',)),     (add_ib_check_if_missing,)],

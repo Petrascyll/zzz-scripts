@@ -4140,17 +4140,17 @@ hash_commands = {
     'ac5f6d76': [
         (log,                           ('1.3: Yanagi HairA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('9e12899f', 'Yanagi.Hair.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('4edb5c79', 'Yanagi.HairA.Diffuse.2048')),
+        (multiply_section_if_missing,   ('4edb5c79', 'Yanagi.HairA.Diffuse.1024')),
     ],
     '99cfa935': [
         (log,                           ('1.3: Yanagi HairA LightMap 2048p Hash',)),
         (add_section_if_missing,        ('9e12899f', 'Yanagi.Hair.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('5a43d985', 'Yanagi.HairA.LightMap.2048')),
+        (multiply_section_if_missing,   ('5a43d985', 'Yanagi.HairA.LightMap.1024')),
     ],
     'f80b57f0': [
         (log,                           ('1.3: Yanagi HairA MaterialMap 2048p Hash',)),
         (add_section_if_missing,        ('9e12899f', 'Yanagi.Hair.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('486e3c42', 'Yanagi.HairA.MaterialMap.2048')),
+        (multiply_section_if_missing,   ('486e3c42', 'Yanagi.HairA.MaterialMap.1024')),
     ],
 
 
@@ -4172,17 +4172,17 @@ hash_commands = {
     'c7c4f5c5': [
         (log,                           ('1.3: Yanagi BodyA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('f478ee4c', 'Yanagi.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('c119dbd7', 'Yanagi.BodyA.Diffuse.2048')),
+        (multiply_section_if_missing,   ('c119dbd7', 'Yanagi.BodyA.Diffuse.1024')),
     ],
     '08933e28': [
         (log,                           ('1.3: Yanagi BodyA LightMap 2048p Hash',)),
         (add_section_if_missing,        ('f478ee4c', 'Yanagi.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('f60602ec', 'Yanagi.BodyA.LightMap.2048')),
+        (multiply_section_if_missing,   ('f60602ec', 'Yanagi.BodyA.LightMap.1024')),
     ],
     'c2ae5d2b': [
         (log,                           ('1.3: Yanagi BodyA MaterialMap 2048p Hash',)),
         (add_section_if_missing,        ('f478ee4c', 'Yanagi.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('b29f0188', 'Yanagi.BodyA.MaterialMap.2048')),
+        (multiply_section_if_missing,   ('b29f0188', 'Yanagi.BodyA.MaterialMap.1024')),
     ],
 
 

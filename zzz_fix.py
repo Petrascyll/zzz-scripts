@@ -4057,19 +4057,18 @@ hash_commands = {
     ],
 
 
-    '84529dab': [
-        (log,                           ('1.0: Wise BodyA Diffuse 2048p Hash',)),
+    '84529dab': [(log, ('1.0 - 1.1: Wise BodyA Diffuse 2048p Hash',)), (update_hash, ('868709f2',))],
+    '868709f2': [
+        (log,                           ('1.1: Wise BodyA Diffuse 2048p Hash',)),
         (add_section_if_missing,        (('8d6acf4e', '054ea752'), 'Wise.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   (('3d7a53b0', 'ef76b675'), 'Wise.BodyA.Diffuse.1024')),
     ],
-    'ef76b675': [
-        (log,                           ('1.0 - 1.1: Wise BodyA Diffuse 1024p Hash',)),
-        (update_hash,                   ('3d7a53b0',))
-    ],
+
+    'ef76b675': [(log, ('1.0 - 1.1: Wise BodyA Diffuse 1024p Hash',)), (update_hash, ('3d7a53b0',))],
     '3d7a53b0': [
         (log,                           ('1.1: Wise BodyA Diffuse 1024p Hash',)),
         (add_section_if_missing,        (('8d6acf4e', '054ea752'), 'Wise.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('84529dab', 'Wise.BodyA.Diffuse.2048')),
+        (multiply_section_if_missing,   (('868709f2', '84529dab'), 'Wise.BodyA.Diffuse.2048')),
     ],
     '088718a9': [
         (log,                           ('1.0: Wise BodyA LightMap 2048p Hash',)),

@@ -1830,6 +1830,9 @@ hash_commands = {
     'a0c80593': [(log, ('1.0: Corin Head IB Hash',)), (add_ib_check_if_missing,)],
 
 
+    '8d999156': [(log, ('1.3 -> 1.4: Corin Hair Blend Hash',)),    (update_hash, ('5fa50113',)),],
+    '2cf242f4': [(log, ('1.3 -> 1.4: Corin Hair Texcoord Hash',)), (update_hash, ('abc95b03',)),],
+
     '97022d3c': [
         (log,                           ('1.0: Corin HeadA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('a0c80593', 'Corin.Head.IB', 'match_priority = 0\n')),
@@ -1861,16 +1864,16 @@ hash_commands = {
         (add_section_if_missing,        ('5a839fb2', 'Corin.Hair.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('929aca42', 'Corin.HairA.LightMap.2048')),
     ],
-    '23b4c60d': [
-        (log,                           ('1.0: Corin HairA MaterialMap 2048p Hash',)),
-        (add_section_if_missing,        ('5a839fb2', 'Corin.Hair.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('1b88e01e', 'Corin.HairA.MaterialMap.1024')),
-    ],
-    '1b88e01e': [
-        (log,                           ('1.0: Corin HairA MaterialMap 1024p Hash',)),
-        (add_section_if_missing,        ('5a839fb2', 'Corin.Hair.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('23b4c60d', 'Corin.HairA.MaterialMap.2048')),
-    ],
+    # '23b4c60d': [
+    #     (log,                           ('1.0: Corin HairA MaterialMap 2048p Hash',)),
+    #     (add_section_if_missing,        ('5a839fb2', 'Corin.Hair.IB', 'match_priority = 0\n')),
+    #     (multiply_section_if_missing,   ('1b88e01e', 'Corin.HairA.MaterialMap.1024')),
+    # ],
+    # '1b88e01e': [
+    #     (log,                           ('1.0: Corin HairA MaterialMap 1024p Hash',)),
+    #     (add_section_if_missing,        ('5a839fb2', 'Corin.Hair.IB', 'match_priority = 0\n')),
+    #     (multiply_section_if_missing,   ('23b4c60d', 'Corin.HairA.MaterialMap.2048')),
+    # ],
     '4a68ef99': [
         (log,                           ('1.0: Corin HairA NormalMap 2048p Hash',)),
         (add_section_if_missing,        ('5a839fb2', 'Corin.Hair.IB', 'match_priority = 0\n')),
@@ -1961,6 +1964,15 @@ hash_commands = {
         (update_hash, ('a27a8e1a',)),
         (log, ('+ Remapping texcoord buffer from stride 36 to 24',)),
         (zzz_12_shrink_texcoord_color, ('1.2',))
+    ],
+    '52188576': [
+        (log,                         ('1.3 -> 1.4: Ellen Hair Blend Remap',)),
+        (update_buffer_blend_indices, (
+            '52188576',
+            (34, 35, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49, 50),
+            (39, 34, 40, 35, 38, 42, 43, 44, 45, 46, 47, 41, 50, 49),
+        )),
+        (update_hash,                 ('e91c93e0',)),
     ],
 
 
@@ -2214,15 +2226,17 @@ hash_commands = {
         (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('1e794b69', 'Grace.BodyA.NormalMap.2048')),
     ],
-    '210b3ebf': [
-        (log,                           ('1.0: Grace BodyB Diffuse 2048p Hash',)),
+    '210b3ebf': [(log, ('1.3 -> 1.4: Grace BodyB Diffuse 2048p Hash',)), (update_hash, ('9c7057e8',))],
+    '9c7057e8': [
+        (log,                           ('1.4: Grace BodyB Diffuse 2048p Hash',)),
         (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('21794bd6', 'Grace.BodyB.Diffuse.1024')),
+        (multiply_section_if_missing,   (('ac361185', '21794bd6'), 'Grace.BodyB.Diffuse.1024')),
     ],
-    '21794bd6': [
-        (log,                           ('1.0: Grace BodyB Diffuse 1024p Hash',)),
+    '21794bd6': [(log, ('1.3 -> 1.4: Grace BodyB Diffuse 1024p Hash',)), (update_hash, ('ac361185',))],
+    'ac361185': [
+        (log,                           ('1.4: Grace BodyB Diffuse 1024p Hash',)),
         (add_section_if_missing,        (('8b240678', '0f82a13e'), 'Grace.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('210b3ebf', 'Grace.BodyB.Diffuse.2048')),
+        (multiply_section_if_missing,   (('9c7057e8', '210b3ebf'), 'Grace.BodyB.Diffuse.2048')),
     ],
     '08082f5f': [
         (log,                           ('1.0: Grace BodyB LightMap 2048p Hash',)),
@@ -2256,9 +2270,122 @@ hash_commands = {
     ],
 
 
+
+    # MARK: Harumasa
+    '6324de38': [(log, ('1.4: Harumasa Hair IB Hash',)), (add_ib_check_if_missing,)],
+    '78bea30d': [(log, ('1.4: Harumasa Body IB Hash',)), (add_ib_check_if_missing,)],
+    'aa7ba2dc': [(log, ('1.4: Harumasa Legs IB Hash',)), (add_ib_check_if_missing,)],
+    'b0688334': [(log, ('1.4: Harumasa Face IB Hash',)), (add_ib_check_if_missing,)],
+
+    '4394c0b2': [
+        (log,                           ('1.4: Harumasa FaceA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('b0688334', 'Harumasa.Face.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('c5596262', 'Harumasa.FaceA.Diffuse.1024')),
+    ],
+    'c5596262': [
+        (log,                           ('1.4: Harumasa FaceA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('b0688334', 'Harumasa.Face.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('4394c0b2', 'Harumasa.FaceA.Diffuse.2048')),
+    ],
+
+    'b8f268ee': [
+        (log,                           ('1.4: Harumasa HairA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('6324de38', 'Harumasa.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('5700ced5', 'Harumasa.HairA.Diffuse.1024')),
+    ],
+    'd4838b9d': [
+        (log,                           ('1.4: Harumasa HairA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('6324de38', 'Harumasa.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('a1310b4f', 'Harumasa.HairA.LightMap.1024')),
+    ],
+    '7217c146': [
+        (log,                           ('1.4: Harumasa HairA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('6324de38', 'Harumasa.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('c2c9ad2d', 'Harumasa.HairA.MaterialMap.1024')),
+    ],
+    '5700ced5': [
+        (log,                           ('1.4: Harumasa HairA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('6324de38', 'Harumasa.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('b8f268ee', 'Harumasa.HairA.Diffuse.2048')),
+    ],
+    'a1310b4f': [
+        (log,                           ('1.4: Harumasa HairA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('6324de38', 'Harumasa.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('d4838b9d', 'Harumasa.HairA.LightMap.2048')),
+    ],
+    'c2c9ad2d': [
+        (log,                           ('1.4: Harumasa HairA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('6324de38', 'Harumasa.Hair.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('7217c146', 'Harumasa.HairA.MaterialMap.2048')),
+    ],
+
+    'ba52ac92': [
+        (log,                           ('1.4: Harumasa BodyA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('78bea30d', 'Harumasa.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('e0b0c6eb', 'Harumasa.BodyA.Diffuse.1024')),
+    ],
+    'cc51476a': [
+        (log,                           ('1.4: Harumasa BodyA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('78bea30d', 'Harumasa.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('2b1230cf', 'Harumasa.BodyA.LightMap.1024')),
+    ],
+    'cd1e0187': [
+        (log,                           ('1.4: Harumasa BodyA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('78bea30d', 'Harumasa.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('2b0017d5', 'Harumasa.BodyA.MaterialMap.1024')),
+    ],
+    'e0b0c6eb': [
+        (log,                           ('1.4: Harumasa BodyA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('78bea30d', 'Harumasa.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('ba52ac92', 'Harumasa.BodyA.Diffuse.2048')),
+    ],
+    '2b1230cf': [
+        (log,                           ('1.4: Harumasa BodyA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('78bea30d', 'Harumasa.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('cc51476a', 'Harumasa.BodyA.LightMap.2048')),
+    ],
+    '2b0017d5': [
+        (log,                           ('1.4: Harumasa BodyA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('78bea30d', 'Harumasa.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('cd1e0187', 'Harumasa.BodyA.MaterialMap.2048')),
+    ],
+
+    '44d74a1a': [
+        (log,                           ('1.4: Harumasa LegsA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('aa7ba2dc', 'Harumasa.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('897c74d5', 'Harumasa.LegsA.Diffuse.1024')),
+    ],
+    '4b4d0ff6': [
+        (log,                           ('1.4: Harumasa LegsA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('aa7ba2dc', 'Harumasa.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('822ec07f', 'Harumasa.LegsA.LightMap.1024')),
+    ],
+    'ba8e396b': [
+        (log,                           ('1.4: Harumasa LegsA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('aa7ba2dc', 'Harumasa.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('bdbf66a1', 'Harumasa.LegsA.MaterialMap.1024')),
+    ],
+    '897c74d5': [
+        (log,                           ('1.4: Harumasa LegsA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('aa7ba2dc', 'Harumasa.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('44d74a1a', 'Harumasa.LegsA.Diffuse.2048')),
+    ],
+    '822ec07f': [
+        (log,                           ('1.4: Harumasa LegsA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('aa7ba2dc', 'Harumasa.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('4b4d0ff6', 'Harumasa.LegsA.LightMap.2048')),
+    ],
+    'bdbf66a1': [
+        (log,                           ('1.4: Harumasa LegsA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('aa7ba2dc', 'Harumasa.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('ba8e396b', 'Harumasa.LegsA.MaterialMap.2048')),
+    ],
+
+
+
     # MARK: Jane Doe
-    '7b16a708': [(log, ('1.1: Jane Hair IB Hash',)), (add_ib_check_if_missing,)],
-    'e2c0144e': [(log, ('1.1: Jane Body IB Hash',)), (add_ib_check_if_missing,)],
+    '9268a5af': [(log, ('1.4: Jane Hair IB Hash',)), (add_ib_check_if_missing,)],
+    'ba4255a5': [(log, ('1.4: Jane Body IB Hash',)), (add_ib_check_if_missing,)],
     'ef86fc9f': [(log, ('1.1: Jane Head IB Hash',)), (add_ib_check_if_missing,)],
 
     'c8ad344e': [
@@ -2268,97 +2395,110 @@ hash_commands = {
         (zzz_12_shrink_texcoord_color, ('1.2',))
     ],
 
+    '5721e4e7': [(log, ('1.3 -> 1.4: Jane Hair Draw Hash',)),     (update_hash, ('2d06e785',)),],
+    '24323bf9': [(log, ('1.3 -> 1.4: Jane Hair Position Hash',)), (update_hash, ('e7a3b7dc',)),],
+    '0a10c747': [(log, ('1.3 -> 1.4: Jane Hair Blend Hash',)),    (update_hash, ('8721477f',)),],
+    '257a90d6': [(log, ('1.3 -> 1.4: Jane Hair Texcoord Hash',)), (update_hash, ('acec29f8',)),],
+    '7b16a708': [(log, ('1.3 -> 1.4: Jane Hair IB Hash',)),       (update_hash, ('9268a5af',)),],
 
-    '689639a5': [
+    'd1aa4b85': [(log, ('1.3 -> 1.4: Jane Body Draw Hash',)),     (update_hash, ('0e1c6740',)),],
+    '06f9bc49': [(log, ('1.3 -> 1.4: Jane Body Position Hash',)), (update_hash, ('10050266',)),],
+    '9727a184': [(log, ('1.3 -> 1.4: Jane Body Blend Hash',)),    (update_hash, ('e27f398e',)),],
+    '8b85c03e': [(log, ('1.3 -> 1.4: Jane Body Texcoord Hash',)), (update_hash, ('949549de',)),],
+    'e2c0144e': [(log, ('1.3 -> 1.4: Jane Body IB Hash',)),       (update_hash, ('ba4255a5',)),],
+
+    '689639a5': [(log, ('1.3 -> 1.4: Jane HeadA Diffuse 1024p Hash',)), (update_hash, ('d823ac80',)),],
+    'd823ac80': [
         (log,                           ('1.1: Jane HeadA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('ef86fc9f', 'Jane.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('8974fb74', 'Jane.HeadA.Diffuse.2048')),
+        (multiply_section_if_missing,   (('3b75aa2c', '8974fb74'), 'Jane.HeadA.Diffuse.2048')),
     ],
-    '8974fb74': [
+    '8974fb74': [(log, ('1.3 -> 1.4: Jane HeadA Diffuse 2048p Hash',)), (update_hash, ('3b75aa2c',)),],
+    '3b75aa2c': [
         (log,                           ('1.1: Jane HeadA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('ef86fc9f', 'Jane.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('689639a5', 'Jane.HeadA.Diffuse.1024')),
+        (multiply_section_if_missing,   (('d823ac80', '689639a5'), 'Jane.HeadA.Diffuse.1024')),
     ],
 
     'f7ef1a53': [
         (log,                           ('1.1: Jane HairA Diffuse 2048p Hash',)),
-        (add_section_if_missing,        ('7b16a708', 'Jane.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('9268a5af', '7b16a708'), 'Jane.Hair.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('b33a9770', 'Jane.HairA.Diffuse.1024')),
     ],
     'b33a9770': [
         (log,                           ('1.1: Jane HairA Diffuse 1024p Hash',)),
-        (add_section_if_missing,        ('7b16a708', 'Jane.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('9268a5af', '7b16a708'), 'Jane.Hair.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('f7ef1a53', 'Jane.HairA.Diffuse.2048')),
     ],
     '9ec4cd4f': [
         (log,                           ('1.1: Jane HairA LightMap 2048p Hash',)),
-        (add_section_if_missing,        ('7b16a708', 'Jane.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('9268a5af', '7b16a708'), 'Jane.Hair.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('5e12acc1', 'Jane.HairA.LightMap.1024')),
     ],
     '5e12acc1': [
         (log,                           ('1.1: Jane HairA LightMap 1024p Hash',)),
-        (add_section_if_missing,        ('7b16a708', 'Jane.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('9268a5af', '7b16a708'), 'Jane.Hair.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('9ec4cd4f', 'Jane.HairA.LightMap.2048')),
     ],
     '5e34e275': [
         (log,                           ('1.1: Jane HairA MaterialMap 2048p Hash',)),
-        (add_section_if_missing,        ('7b16a708', 'Jane.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('9268a5af', '7b16a708'), 'Jane.Hair.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('40fca454', 'Jane.HairA.MaterialMap.1024')),
     ],
     '40fca454': [
         (log,                           ('1.1: Jane HairA MaterialMap 1024p Hash',)),
-        (add_section_if_missing,        ('7b16a708', 'Jane.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('9268a5af', '7b16a708'), 'Jane.Hair.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('5e34e275', 'Jane.HairA.MaterialMap.2048')),
     ],
     '4aa12b36': [
         (log,                           ('1.1: Jane HairA NormalMap 2048p Hash',)),
-        (add_section_if_missing,        ('7b16a708', 'Jane.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('9268a5af', '7b16a708'), 'Jane.Hair.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('f0aded31', 'Jane.HairA.NormalMap.1024')),
     ],
     'f0aded31': [
         (log,                           ('1.1: Jane HairA NormalMap 1024p Hash',)),
-        (add_section_if_missing,        ('7b16a708', 'Jane.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('9268a5af', '7b16a708'), 'Jane.Hair.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('4aa12b36', 'Jane.HairA.NormalMap.2048')),
     ],
 
     'd1f56c7d': [
         (log,                           ('1.1: Jane BodyA Diffuse 2048p Hash',)),
-        (add_section_if_missing,        ('e2c0144e', 'Jane.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('ba4255a5', 'e2c0144e'), 'Jane.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('e62ae3b5', 'Jane.BodyA.Diffuse.1024')),
     ],
     'e62ae3b5': [
         (log,                           ('1.1: Jane BodyA Diffuse 1024p Hash',)),
-        (add_section_if_missing,        ('e2c0144e', 'Jane.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('ba4255a5', 'e2c0144e'), 'Jane.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('d1f56c7d', 'Jane.BodyA.Diffuse.2048')),
     ],
     '3087f82a': [
         (log,                           ('1.1: Jane BodyA LightMap 2048p Hash',)),
-        (add_section_if_missing,        ('e2c0144e', 'Jane.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('ba4255a5', 'e2c0144e'), 'Jane.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('52fa9861', 'Jane.BodyA.LightMap.1024')),
     ],
     '52fa9861': [
         (log,                           ('1.1: Jane BodyA LightMap 1024p Hash',)),
-        (add_section_if_missing,        ('e2c0144e', 'Jane.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('ba4255a5', 'e2c0144e'), 'Jane.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('3087f82a', 'Jane.BodyA.LightMap.2048')),
     ],
     '99eae42e': [
         (log,                           ('1.1: Jane BodyA MaterialMap 2048p Hash',)),
-        (add_section_if_missing,        ('e2c0144e', 'Jane.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('ba4255a5', 'e2c0144e'), 'Jane.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('5dce2408', 'Jane.BodyA.MaterialMap.1024')),
     ],
     '5dce2408': [
         (log,                           ('1.1: Jane BodyA MaterialMap 1024p Hash',)),
-        (add_section_if_missing,        ('e2c0144e', 'Jane.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('ba4255a5', 'e2c0144e'), 'Jane.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('99eae42e', 'Jane.BodyA.MaterialMap.2048')),
     ],
     '0165f71c': [
         (log,                           ('1.1: Jane BodyA NormalMap 2048p Hash',)),
-        (add_section_if_missing,        ('e2c0144e', 'Jane.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('ba4255a5', 'e2c0144e'), 'Jane.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('387dfc9f', 'Jane.BodyA.NormalMap.1024')),
     ],
     '387dfc9f': [
         (log,                           ('1.1: Jane BodyA NormalMap 1024p Hash',)),
-        (add_section_if_missing,        ('e2c0144e', 'Jane.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('ba4255a5', 'e2c0144e'), 'Jane.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('0165f71c', 'Jane.BodyA.NormalMap.2048')),
     ],
 
@@ -2481,16 +2621,23 @@ hash_commands = {
     '542b8aa9': [(log, ('1.3: Lighter Hair IB Hash',)),    (add_ib_check_if_missing,)],
     '8899e0fd': [(log, ('1.3: Lighter Body IB Hash',)),    (add_ib_check_if_missing,)],
     '018b03f0': [(log, ('1.3: Lighter Arm IB Hash',)),     (add_ib_check_if_missing,)],
-    '039f30cf': [(log, ('1.3: Lighter Face IB Hash',)),    (add_ib_check_if_missing,)],
+
+    '039f30cf': [(log, ('1.3 -> 1.4: Lighter Face IB Hash',)), (update_hash, ('dcc7bb78',))],
+    'dcc7bb78': [(log, ('1.3: Lighter Face IB Hash',)),        (add_ib_check_if_missing,)],
+
+    '0baec6b7': [(log, ('1.3 -> 1.4: Lighter Body Position Hash',)), (update_hash, ('5e461440',))],
+    '710bca71': [(log, ('1.3 -> 1.4: Lighter Body Texcoord Hash',)), (update_hash, ('25ad7289',))],
+    'af2e48a6': [(log, ('1.3 -> 1.4: Lighter Arm Texcoord Hash',)),  (update_hash, ('88aecee2',))],
+
 
     '8ec33dd0': [
         (log,                           ('1.3: Lighter FaceA Diffuse 1024p Hash',)),
-        (add_section_if_missing,        ('039f30cf', 'Lighter.Face.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('dcc7bb78', '039f30cf'), 'Lighter.Face.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('4524e91a', 'Lighter.FaceA.Diffuse.2048')),
     ],
     '4524e91a': [
         (log,                           ('1.3: Lighter FaceA Diffuse 2048p Hash',)),
-        (add_section_if_missing,        ('039f30cf', 'Lighter.Face.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('dcc7bb78', '039f30cf'), 'Lighter.Face.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('8ec33dd0', 'Lighter.FaceA.Diffuse.1024')),
     ],
 
@@ -2786,34 +2933,31 @@ hash_commands = {
 
 
     # MARK: Lycaon
-    '060bc1ad': [(log, ('1.0: Lycaon Hair IB Hash',)), (add_ib_check_if_missing,)],
-    '25196b7a': [(log, ('1.0: Lycaon Body IB Hash',)), (add_ib_check_if_missing,)],
+    '060bc1ad': [(log, ('1.0: Lycaon Hair IB Hash',)),              (add_ib_check_if_missing,)],
+    '395572dc': [(log, ('1.3 -> 1.4: Lycaon Hair Texcoord Hash',)), (update_hash, ('b092c043',))],
+    
+    '25196b7a': [(log, ('1.3 -> 1.4: Lycaon Body IB Hash',)), (update_hash, ('6749b6e7',))],
+    '6749b6e7': [(log, ('1.0: Lycaon Body IB Hash',)),        (add_ib_check_if_missing,)],
+    
+    '2a340ed5': [(log, ('1.3 -> 1.4: Lycaon Body Draw Hash',)),     (update_hash, ('25418598',))],
+    'b68056b4': [(log, ('1.3 -> 1.4: Lycaon Body Position Hash',)), (update_hash, ('8c7775ae',))],
+    'a485180e': [(log, ('1.3 -> 1.4: Lycaon Body Blend Hash',)),    (update_hash, ('f2d1a929',))],
+    '949e688a': [(log, ('1.3 -> 1.4: Lycaon Body Texcoord Hash',)), (update_hash, ('b950fda5',))],
+
     '5e710f36': [(log, ('1.0: Lycaon Mask IB Hash',)), (add_ib_check_if_missing,)],
     '22a1347b': [(log, ('1.0: Lycaon Legs IB Hash',)), (add_ib_check_if_missing,)],
     '7341e07b': [(log, ('1.0: Lycaon Head IB Hash',)), (add_ib_check_if_missing,)],
-
 
     '4f098897': [
         (log,                           ('1.0: Lycaon HeadA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('7341e07b', 'Lycaon.Head.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('d14f3284', 'Lycaon.HeadA.Diffuse.2048')),
     ],
-    '7ee74083': [
-        (log,                           ('1.0: Lycaon HeadA LightMap 1024p Hash',)),
-        (add_section_if_missing,        ('7341e07b', 'Lycaon.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('fd705bb4', 'Lycaon.HeadA.LightMap.2048')),
-    ],
     'd14f3284': [
         (log,                           ('1.0: Lycaon HeadA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('7341e07b', 'Lycaon.Head.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('4f098897', 'Lycaon.HeadA.Diffuse.1024')),
     ],
-    'fd705bb4': [
-        (log,                           ('1.0: Lycaon HeadA LightMap 2048p Hash',)),
-        (add_section_if_missing,        ('7341e07b', 'Lycaon.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('7ee74083', 'Lycaon.HeadA.LightMap.1024')),
-    ],
-
 
     '61aaace5': [
         (log,                           ('1.0: Lycaon HairA, MaskA Diffuse 2048p Hash',)),
@@ -2827,17 +2971,19 @@ hash_commands = {
         (add_section_if_missing,        ('5e710f36', 'Lycaon.Mask.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('61aaace5', 'Lycaon.HairA.Diffuse.2048')),
     ],
-    '3d6eb388': [
-        (log,                           ('1.0: Lycaon HairA, MaskA LightMap 2048p Hash',)),
+    '3d6eb388': [(log, ('1.3 -> 1.4: Lycaon HairA, MaskA LightMap 2048p Hash',)), (update_hash, ('04d061fe',))],
+    '04d061fe': [
+        (log,                           ('1.4: Lycaon HairA, MaskA LightMap 2048p Hash',)),
         (add_section_if_missing,        ('060bc1ad', 'Lycaon.Hair.IB', 'match_priority = 0\n')),
         (add_section_if_missing,        ('5e710f36', 'Lycaon.Mask.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('4d4e8986', 'Lycaon.HairA.LightMap.1024')),
+        (multiply_section_if_missing,   (('4d878953', '4d4e8986'), 'Lycaon.HairA.LightMap.1024')),
     ],
-    '4d4e8986': [
-        (log,                           ('1.0: Lycaon HairA, MaskA LightMap 1024p Hash',)),
+    '4d4e8986': [(log, ('1.3 -> 1.4: Lycaon HairA, MaskA LightMap 1024p Hash',)), (update_hash, ('4d878953',))],
+    '4d878953': [
+        (log,                           ('1.4: Lycaon HairA, MaskA LightMap 1024p Hash',)),
         (add_section_if_missing,        ('060bc1ad', 'Lycaon.Hair.IB', 'match_priority = 0\n')),
         (add_section_if_missing,        ('5e710f36', 'Lycaon.Mask.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('3d6eb388', 'Lycaon.HairA.LightMap.2048')),
+        (multiply_section_if_missing,   (('04d061fe', '3d6eb388'), 'Lycaon.HairA.LightMap.2048')),
     ],
     '02bfcc69': [
         (log,                           ('1.0: Lycaon HairA, MaskA MaterialMap 2048p Hash',)),
@@ -2866,42 +3012,44 @@ hash_commands = {
 
     '7169ec86': [
         (log,                           ('1.0: Lycaon BodyA Diffuse 2048p Hash',)),
-        (add_section_if_missing,        ('25196b7a', 'Lycaon.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('6749b6e7', '25196b7a'), 'Lycaon.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('82ad0c28', 'Lycaon.BodyA.Diffuse.1024')),
     ],
     '82ad0c28': [
         (log,                           ('1.0: Lycaon BodyA Diffuse 1024p Hash',)),
-        (add_section_if_missing,        ('25196b7a', 'Lycaon.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('6749b6e7', '25196b7a'), 'Lycaon.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('7169ec86', 'Lycaon.BodyA.Diffuse.2048')),
     ],
-    '565aa8be': [
+    '565aa8be': [(log, ('1.3 -> 1.4: Lycaon Body LightMap 2048p Hash',)), (update_hash, ('814db5bf',))],
+    '814db5bf': [
         (log,                           ('1.0: Lycaon BodyA LightMap 2048p Hash',)),
-        (add_section_if_missing,        ('25196b7a', 'Lycaon.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('7ea75154', 'Lycaon.BodyA.LightMap.1024')),
+        (add_section_if_missing,        (('6749b6e7', '25196b7a'), 'Lycaon.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   (('122c655e', '7ea75154'), 'Lycaon.BodyA.LightMap.1024')),
     ],
-    '7ea75154': [
+    '7ea75154': [(log, ('1.3 -> 1.4: Lycaon Body LightMap 1024p Hash',)), (update_hash, ('122c655e',))],
+    '122c655e': [
         (log,                           ('1.0: Lycaon BodyA LightMap 1024p Hash',)),
-        (add_section_if_missing,        ('25196b7a', 'Lycaon.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('565aa8be', 'Lycaon.BodyA.LightMap.2048')),
+        (add_section_if_missing,        (('6749b6e7', '25196b7a'), 'Lycaon.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   (('814db5bf', '565aa8be'), 'Lycaon.BodyA.LightMap.2048')),
     ],
     '5a321eae': [
         (log,                           ('1.0: Lycaon BodyA MaterialMap 2048p Hash',)),
-        (add_section_if_missing,        ('25196b7a', 'Lycaon.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('6749b6e7', '25196b7a'), 'Lycaon.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('7cca7d7e', 'Lycaon.BodyA.MaterialMap.1024')),
     ],
     '7cca7d7e': [
         (log,                           ('1.0: Lycaon BodyA MaterialMap 1024p Hash',)),
-        (add_section_if_missing,        ('25196b7a', 'Lycaon.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('6749b6e7', '25196b7a'), 'Lycaon.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('5a321eae', 'Lycaon.BodyA.MaterialMap.2048')),
     ],
     'c8fd1702': [
         (log,                           ('1.0: Lycaon BodyA NormalMap 2048p Hash',)),
-        (add_section_if_missing,        ('25196b7a', 'Lycaon.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('6749b6e7', '25196b7a'), 'Lycaon.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('bac2b2e2', 'Lycaon.BodyA.NormalMap.1024')),
     ],
     'bac2b2e2': [
         (log,                           ('1.0: Lycaon BodyA NormalMap 1024p Hash',)),
-        (add_section_if_missing,        ('25196b7a', 'Lycaon.Body.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        (('6749b6e7', '25196b7a'), 'Lycaon.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('c8fd1702', 'Lycaon.BodyA.NormalMap.2048')),
     ],
 
@@ -2944,6 +3092,93 @@ hash_commands = {
         (log,                           ('1.0: Lycaon LegsA NormalMap 1024p Hash',)),
         (add_section_if_missing,        ('22a1347b', 'Lycaon.Legs.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('72f53876', 'Lycaon.LegsA.NormalMap.2048')),
+    ],
+
+
+
+    # MARK: Miyabi
+    '4faabaac': [(log, ('1.4: Miyabi Hair IB Hash',)),   (add_ib_check_if_missing,)],
+    '981c1a1e': [(log, ('1.4: Miyabi Body IB Hash',)),   (add_ib_check_if_missing,)],
+    'd8003df3': [(log, ('1.4: Miyabi Legs IB Hash',)),   (add_ib_check_if_missing,)],
+    'dbd59d30': [(log, ('1.4: Miyabi Face IB Hash',)),   (add_ib_check_if_missing,)],
+
+    '1d487fd5': [
+        (log,                           ('1.4: Miyabi FaceA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('dbd59d30', 'Miyabi.Face.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('92599e94', 'Miyabi.FaceA.Diffuse.1024')),
+    ],
+    '92599e94': [
+        (log,                           ('1.4: Miyabi FaceA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('dbd59d30', 'Miyabi.Face.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('1d487fd5', 'Miyabi.FaceA.Diffuse.2048')),
+    ],
+
+    '012e84e9': [
+        (log,                           ('1.4: Miyabi HairA, LegsA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('4faabaac', 'Miyabi.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        ('d8003df3', 'Miyabi.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('ed6b94f7', 'Miyabi.HairA.Diffuse.1024')),
+    ],
+    'a6ea6d83': [
+        (log,                           ('1.4: Miyabi HairA, LegsA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('4faabaac', 'Miyabi.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        ('d8003df3', 'Miyabi.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('8b5708f4', 'Miyabi.HairA.LightMap.1024')),
+    ],
+    'd5462e37': [
+        (log,                           ('1.4: Miyabi HairA, LegsA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('4faabaac', 'Miyabi.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        ('d8003df3', 'Miyabi.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('a84d9003', 'Miyabi.HairA.MaterialMap.1024')),
+    ],
+    'ed6b94f7': [
+        (log,                           ('1.4: Miyabi HairA, LegsA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('4faabaac', 'Miyabi.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        ('d8003df3', 'Miyabi.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('012e84e9', 'Miyabi.HairA.Diffuse.2048')),
+    ],
+    '8b5708f4': [
+        (log,                           ('1.4: Miyabi HairA, LegsA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('4faabaac', 'Miyabi.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        ('d8003df3', 'Miyabi.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('a6ea6d83', 'Miyabi.HairA.LightMap.2048')),
+    ],
+    'a84d9003': [
+        (log,                           ('1.4: Miyabi HairA, LegsA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('4faabaac', 'Miyabi.Hair.IB', 'match_priority = 0\n')),
+        (add_section_if_missing,        ('d8003df3', 'Miyabi.Legs.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('d5462e37', 'Miyabi.HairA.MaterialMap.2048')),
+    ],
+
+    '09a2bbd1': [
+        (log,                           ('1.4: Miyabi BodyA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('981c1a1e', 'Miyabi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('1a3644e7', 'Miyabi.BodyA.Diffuse.1024')),
+    ],
+    'fd289380': [
+        (log,                           ('1.4: Miyabi BodyA LightMap 2048p Hash',)),
+        (add_section_if_missing,        ('981c1a1e', 'Miyabi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('0492f64a', 'Miyabi.BodyA.LightMap.1024')),
+    ],
+    '450770fd': [
+        (log,                           ('1.4: Miyabi BodyA MaterialMap 2048p Hash',)),
+        (add_section_if_missing,        ('981c1a1e', 'Miyabi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('168b1df9', 'Miyabi.BodyA.MaterialMap.1024')),
+    ],
+    '1a3644e7': [
+        (log,                           ('1.4: Miyabi BodyA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('981c1a1e', 'Miyabi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('09a2bbd1', 'Miyabi.BodyA.Diffuse.2048')),
+    ],
+    '0492f64a': [
+        (log,                           ('1.4: Miyabi BodyA LightMap 1024p Hash',)),
+        (add_section_if_missing,        ('981c1a1e', 'Miyabi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('fd289380', 'Miyabi.BodyA.LightMap.2048')),
+    ],
+    '168b1df9': [
+        (log,                           ('1.4: Miyabi BodyA MaterialMap 1024p Hash',)),
+        (add_section_if_missing,        ('981c1a1e', 'Miyabi.Body.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('450770fd', 'Miyabi.BodyA.MaterialMap.2048')),
     ],
 
 
@@ -3230,6 +3465,7 @@ hash_commands = {
         (log, ('+ Remapping texcoord buffer',)),
         (zzz_12_shrink_texcoord_color, ('1.2',))
     ],
+    '8b6b17f8': [(log, ('1.3 -> 1.4: Piper Hair Texcoord Hash',)), (update_hash, ('1c6d41af',)),],
 
     'b2f3e6aa': [(log, ('1.1 -> 1.2: Piper Body Position Hash',)), (update_hash, ('ffe8fea7',)),],
     'a0d146b3': [(log, ('1.1 -> 1.2: Piper Body Texcoord Hash',)), (update_hash, ('a011f94e',)),],

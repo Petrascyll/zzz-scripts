@@ -19,7 +19,7 @@ global_modified_buffers: dict[str, list[str]] = {}
 
 def main():
     parser = argparse.ArgumentParser(
-        prog="ZZZ Fix 1.3",
+        prog="ZZZ Fix 1.4",
         description=('')
     )
 
@@ -353,10 +353,46 @@ class comment_sections():
         )
 
 
+@dataclass
+class comment_commandlists():
+    commandlist_title: str
+
+    def execute(self, default_args: DefaultArgs):
+        ini  = default_args.ini
+
+        pattern = get_section_title_pattern(self.commandlist_title)
+        new_ini_content = ''   # ini content with matching commandlist commented out
+
+        prev_j = 0
+        commented_count = 0
+        commandlist_matches = pattern.finditer(ini.content)
+        for commandlist_match in commandlist_matches:
+            i, j = commandlist_match.span(1)
+            commented_commandlist = '\n'.join(['; ' + line for line in commandlist_match.group(1).splitlines()])
+            commented_count  += 1
+
+            new_ini_content += ini.content[prev_j:i] + commented_commandlist
+            prev_j = j
+
+        new_ini_content += ini.content[prev_j:]
+        
+        ini.content = new_ini_content
+
+        return ExecutionResult(
+            touched        = True,
+            failed         = False,
+            signal_break   = False,
+            queue_hashes   = None,
+            queue_commands = (
+                (log, ('- Commented {} relevant commandlist(s)'.format(commented_count),)),
+            )
+        )
+
+
 @dataclass(kw_only=True)
 class remove_section():
-    capture_content  = False
-    capture_position = False
+    capture_content : str = None
+    capture_position: str = None
 
     def execute(self, default_args: DefaultArgs):
         ini         = default_args.ini
@@ -369,9 +405,9 @@ class remove_section():
         start, end = section_match.span(1)
 
         if self.capture_content:
-            data['🍰'] = get_critical_content(section_match.group(1))[0]
+            data[self.capture_content] = get_critical_content(section_match.group(1))[0]
         if self.capture_position:
-            data['🌲'] = str(start)
+            data[self.capture_position] = str(start)
 
         ini.content = ini.content[:start] + ini.content[end:]
 
@@ -719,179 +755,6 @@ class add_section_if_missing():
         )
 
 
-# @dataclass
-# class trim_buffer_width():
-#     old_stride: int
-#     new_stride: int
-
-#     def execute(self, default_args: DefaultArgs):
-#         ini  = default_args.ini
-#         hash = default_args.hash
-#         tabs = default_args.tabs
-
-#         # Need to find all Texcoord Resources used by this hash directly
-#         # through TextureOverrides or run through Commandlists... 
-#         pattern = get_section_hash_pattern(hash)
-#         section_match = pattern.search(ini.content)
-#         resources = process_commandlist(ini.content, section_match.group(1), 'vb1')
-
-#         # - Match Resource sections to find filenames of buffers 
-#         # - Update stride value of resources early instead of iterating again later
-#         buffer_filenames = set()
-#         line_pattern = re.compile(r'^\s*(filename|stride)\s*=\s*(.*)\s*$', flags=re.IGNORECASE)
-#         for resource in resources:
-#             pattern = get_section_title_pattern(resource)
-#             resource_section_match = pattern.search(ini.content)
-#             if not resource_section_match: continue
-
-#             modified_resource_section = []
-#             for line in resource_section_match.group(1).splitlines():
-#                 line_match = line_pattern.match(line)
-#                 if not line_match:
-#                     modified_resource_section.append(line)
-
-#                 # Capture buffer filename
-#                 elif line_match.group(1) == 'filename':
-#                     modified_resource_section.append(line)
-#                     buffer_filenames.add(line_match.group(2))
-
-#                 # Update stride value of resource in ini
-#                 elif line_match.group(1) == 'stride':
-#                     if int(line_match.group(2)) != self.old_stride:
-#                         print('\t'*tabs+'X Error: Incorrect Buffer Stride.')
-#                         raise Exception()
-
-#                     modified_resource_section.append('stride = {}'.format(self.new_stride))
-#                     modified_resource_section.append(';'+line)
-
-#             # Update ini
-#             modified_resource_section = '\n'.join(modified_resource_section)
-#             i, j = resource_section_match.span(1)
-#             ini.content = ini.content[:i] + modified_resource_section + ini.content[j:]
-
-#         for buffer_filename in buffer_filenames:
-#             buffer_filepath = Path(Path(ini.filepath).parent/buffer_filename)
-#             buffer_dict_key = str(buffer_filepath.absolute())
-
-#             if buffer_dict_key not in ini.modified_buffers:
-#                 buffer = buffer_filepath.read_bytes()
-#             else:
-#                 buffer = ini.modified_buffers[buffer_dict_key]
-
-#             vcount = len(buffer) // self.old_stride
-#             new_buffer = bytearray()
-#             for i in range(vcount):
-#                 new_buffer.extend(buffer[i*self.old_stride: i*self.old_stride + self.new_stride])
-
-#             ini.modified_buffers[buffer_dict_key] = new_buffer
-
-#         return ExecutionResult(
-#             touched=True
-#         )
-    
-
-@dataclass
-class update_buffer_element_width():
-    old_format: tuple[str]
-    new_format: tuple[str]
-    id: str
-
-    def execute(self, default_args: DefaultArgs):
-        ini  = default_args.ini
-        hash = default_args.hash
-        tabs = default_args.tabs
-
-        if 'AtsuiHinoKoubouGrace' in Path(ini.filepath).parent.name:
-            raise Exception('Invalid')
-
-        old_format = '<' + ''.join(self.old_format)
-        new_format = '<' + ''.join(self.new_format)
-
-        # Need to find all Texcoord Resources used by this hash directly
-        # through TextureOverrides or run through Commandlists... 
-        pattern = get_section_hash_pattern(hash)
-        section_match = pattern.search(ini.content)
-        resources = process_commandlist(ini.content, section_match.group(1), 'vb1')
-
-        # - Match Resource sections to find filenames of buffers 
-        # - Update stride value of resources early instead of iterating again later
-        buffer_filenames = set()
-        line_pattern = re.compile(r'^\s*(filename|stride)\s*=\s*(.*)\s*$', flags=re.IGNORECASE)
-        for resource in resources:
-            pattern = get_section_title_pattern(resource)
-            resource_section_match = pattern.search(ini.content)
-            if not resource_section_match: continue
-
-            modified_resource_section = []
-            for line in resource_section_match.group(1).splitlines():
-                line_match = line_pattern.match(line)
-                if not line_match:
-                    modified_resource_section.append(line)
-
-                # Capture buffer filename
-                elif line_match.group(1) == 'filename':
-                    modified_resource_section.append(line)
-                    buffer_filenames.add(line_match.group(2))
-
-                # Update stride value of resource in ini
-                elif line_match.group(1) == 'stride':
-                    stride = int(line_match.group(2))
-                    if stride != struct.calcsize(old_format):
-                        print('\t'*tabs+'X Warning: Incorrect Buffer Stride. Bruteforcing...')
-
-                        modified_resource_section.append('stride = {}'.format(stride + 12))
-                    else:
-                        modified_resource_section.append('stride = {}'.format(struct.calcsize(new_format)))
-                
-                    modified_resource_section.append(';'+line)
-
-            # Update ini
-            modified_resource_section = '\n'.join(modified_resource_section)
-            i, j = resource_section_match.span(1)
-            ini.content = ini.content[:i] + modified_resource_section + ini.content[j:]
-
-        global global_modified_buffers
-        for buffer_filename in buffer_filenames:
-            buffer_filepath = Path(Path(ini.filepath).parent/buffer_filename)
-            buffer_dict_key = str(buffer_filepath.absolute())
-
-            if buffer_dict_key not in global_modified_buffers:
-                global_modified_buffers[buffer_dict_key] = []
-            fix_id = f'{self.id}-update_buffer_element_width'
-            if fix_id in global_modified_buffers[buffer_dict_key]: continue
-            else: global_modified_buffers[buffer_dict_key].append(fix_id)
-
-            if buffer_dict_key not in ini.modified_buffers:
-                buffer = buffer_filepath.read_bytes()
-            else:
-                buffer = ini.modified_buffers[buffer_dict_key]
-
-            # TODO CleanUp
-            vcount = len(buffer) // stride
-            new_buffer = bytearray()
-            for i in range(vcount):
-                new_buffer.extend(struct.pack('<4f', *[b/255 for b in struct.unpack_from('<4B', buffer, i*stride + 0)]))
-                new_buffer.extend(buffer[i*stride + 4: i*stride + stride])
-
-            # new_buffer = bytearray()
-            # for chunk in struct.iter_unpack(old_format, buffer):
-            #     new_buffer.extend(struct.pack(new_format, *[
-            #         c if old_format[i+1] != 'B'
-            #         else c/255
-            #         for i, c in enumerate(chunk)
-            #     ]))
-
-            # old_vertex_count = len(buffer)     // struct.calcsize(old_format)
-            # new_vertex_count = len(new_buffer) // struct.calcsize(new_format)
-            # if old_vertex_count != new_vertex_count:
-            #     raise Exception('Byte width Update failed')
-            
-            ini.modified_buffers[buffer_dict_key] = new_buffer
-
-        return ExecutionResult(
-            touched=True
-        )
-
 @dataclass
 class zzz_13_remap_texcoord():
     id: str
@@ -1011,6 +874,8 @@ class zzz_13_remap_texcoord():
             touched=True
         )
 
+
+# Deprecated. Use generalized remap_texcoord instead
 @dataclass
 class zzz_12_shrink_texcoord_color():
     id: str
@@ -1091,100 +956,6 @@ class zzz_12_shrink_texcoord_color():
         return ExecutionResult(
             touched=True
         )
-
-@dataclass
-class update_buffer_element_value():
-    buffer_format: tuple[str]
-    buffer_values: tuple[str]
-    id: str
-
-    def execute(self, default_args: DefaultArgs):
-        ini  = default_args.ini
-        hash = default_args.hash
-        tabs = default_args.tabs
-
-        # TODO TODO TODO
-        if 'AtsuiHinoKoubouGrace' in Path(ini.filepath).parent.name:
-            return ExecutionResult(touched=False)
-
-        # Need to find all Texcoord Resources used by this hash directly
-        # through TextureOverrides or run through Commandlists... 
-        pattern = get_section_hash_pattern(hash)
-        section_match = pattern.search(ini.content)
-        resources = process_commandlist(ini.content, section_match.group(1), 'vb1')
-
-        buffer_format = '<' + ''.join(self.buffer_format)
-        buffer_values = ''.join(self.buffer_values)
-
-        # - Match Resource sections to find filenames of buffers 
-        # - Update stride value of resources early instead of iterating again later
-        buffer_filenames = set()
-        line_pattern = re.compile(r'^\s*(filename|stride)\s*=\s*(.*)\s*$', flags=re.IGNORECASE)
-        for resource in resources:
-            pattern = get_section_title_pattern(resource)
-            resource_section_match = pattern.search(ini.content)
-            if not resource_section_match: continue
-
-            modified_resource_section = []
-            for line in resource_section_match.group(1).splitlines():
-                line_match = line_pattern.match(line)
-                if not line_match:
-                    modified_resource_section.append(line)
-
-                # Capture buffer filename
-                elif line_match.group(1) == 'filename':
-                    modified_resource_section.append(line)
-                    buffer_filenames.add(line_match.group(2))
-
-                elif line_match.group(1) == 'stride':
-                    stride = int(line_match.group(2))
-                    if stride != struct.calcsize(buffer_format):
-                        print('\t'*tabs+'X Warning: Incorrect Buffer Stride. Bruteforcing...')
-
-        global global_modified_buffers
-        for buffer_filename in buffer_filenames:
-            buffer_filepath = Path(Path(ini.filepath).parent/buffer_filename)
-            buffer_dict_key = str(buffer_filepath.absolute())
-
-            if buffer_dict_key not in global_modified_buffers:
-                global_modified_buffers[buffer_dict_key] = []
-            fix_id = f'{self.id}-update_buffer_element_value'
-            if fix_id in global_modified_buffers[buffer_dict_key]: continue
-            else: global_modified_buffers[buffer_dict_key].append(fix_id)
-        
-            if buffer_dict_key not in ini.modified_buffers:
-                buffer = buffer_filepath.read_bytes()
-            else:
-                buffer = ini.modified_buffers[buffer_dict_key]
-    
-            # TODO: Cleanup
-            vcount = len(buffer) // stride
-            new_buffer = bytearray()
-            for i in range(vcount):
-                new_buffer.extend(
-                    struct.pack('<'+self.buffer_format[0], *[
-                        element if buffer_values[i] == 'x' else int(buffer_values[i])
-                        for i, element in enumerate(
-                            struct.unpack_from('<'+self.buffer_format[0], buffer, i*stride + 0)
-                        )
-                    ])
-                )
-                new_buffer.extend(buffer[i*stride + struct.calcsize(self.buffer_format[0]): i*stride + stride])
-
-            # new_buffer = bytearray()
-            # for chunk in struct.iter_unpack(buffer_format, buffer):
-            #     new_buffer.extend(struct.pack(buffer_format, *[
-            #         element if buffer_values[i] == 'x'
-            #         else int(buffer_values[i])
-            #         for i, element in enumerate(chunk)
-            #     ]))
-
-            ini.modified_buffers[buffer_dict_key] = new_buffer
-
-        return ExecutionResult(
-            touched=True
-        )
-
 
 @dataclass
 class update_buffer_blend_indices():
@@ -2182,9 +1953,7 @@ hash_commands = {
         (log, ('1.0 -> 1.1: Ellen Hair Texcoord Hash',)),
         (update_hash, ('5c33833e',)),
         (log, ('+ Remapping texcoord buffer from stride 24 to 36',)),
-        (update_buffer_element_width, (('BBBB', 'ee', 'ff', 'ee', 'ee'), ('ffff', 'ee', 'ff', 'ee', 'ee'), '1.1')),
-        # (log, ('+ Setting texcoord vcolor alpha to 1',)),
-        # (update_buffer_element_value, (('ffff', 'ee', 'ff', 'ee', 'ee'), ('xxx1', 'xx', 'xx', 'xx', 'xx'), '1.1'))
+        (zzz_13_remap_texcoord, ('11_Ellen_Hair', ('4B', '2e', '2f', '2e', '2e'), ('4f', '2e', '2f', '2e', '2e'))), # attention
     ],
 
     '5c33833e': [
@@ -4097,8 +3866,6 @@ hash_commands = {
     'a012c752': [
         (log,               ('1.0 -> 1.1: Wise Body Texcoord Hash',)),
         (update_hash,       ('f425bd04',)),
-        # (trim_buffer_width, (20, 16))
-        # (update_buffer_element_value, (('BBBB',), ('wise',)))
     ],
 
     '67f21c9f': [(log, ('1.2 -> 1.3: Wise Body Position Hash',)), (update_hash, ('f6c5b9f3',))],

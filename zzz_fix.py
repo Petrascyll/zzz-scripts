@@ -1607,15 +1607,17 @@ hash_commands = {
     'af63e974': [(log, ('1.2: Burnice Body IB Hash',)), (add_ib_check_if_missing,)],
     'b3f6fcb3': [(log, ('1.2: Burnice Head IB Hash',)), (add_ib_check_if_missing,)],
 
-    'c9c87bb1': [
-        (log,                           ('1.2: Burnice HeadA Diffuse 1024p Hash',)),
+    'c9c87bb1': [(log, ('1.3 -> 1.4: Burnice HeadA Diffuse 1024p Hash',)), (update_hash, ('68f0fb19',)),],
+    '68f0fb19': [
+        (log,                           ('1.4: Burnice HeadA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('b3f6fcb3', 'Burnice.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('e338bb82', 'Burnice.HeadA.Diffuse.2048')),
+        (multiply_section_if_missing,   (('c4b6bb10', 'e338bb82'), 'Burnice.HeadA.Diffuse.2048')),
     ],
-    'e338bb82': [
-        (log,                           ('1.2: Burnice HeadA Diffuse 2048p Hash',)),
+    'e338bb82': [(log, ('1.3 -> 1.4: Burnice HeadA Diffuse 2048p Hash',)), (update_hash, ('c4b6bb10',)),],
+    'c4b6bb10': [
+        (log,                           ('1.4: Burnice HeadA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('b3f6fcb3', 'Burnice.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('c9c87bb1', 'Burnice.HeadA.Diffuse.1024')),
+        (multiply_section_if_missing,   (('68f0fb19', 'c9c87bb1'), 'Burnice.HeadA.Diffuse.1024')),
     ],
 
     '609b50a9': [
@@ -1810,15 +1812,18 @@ hash_commands = {
         (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('d5d89d5b', 'Caesar.BodyA.MaterialMap.2048')),
     ],
-    'c1f1e12f': [
-        (log,                           ('1.2: Caesar BodyA NormalMap 2048p Hash',)),
+
+    'c1f1e12f': [(log, ('1.3 -> 1.4: Caesar BodyA NormalMap 2048p Hash',)), (update_hash, ('f1c6c309',)),],
+    'f1c6c309': [
+        (log,                           ('1.4: Caesar BodyA NormalMap 2048p Hash',)),
         (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('8cdf95d0', 'Caesar.BodyA.NormalMap.1024')),
+        (multiply_section_if_missing,   (('a8abff9d', '8cdf95d0'), 'Caesar.BodyA.NormalMap.1024')),
     ],
-    '8cdf95d0': [
-        (log,                           ('1.2: Caesar BodyA NormalMap 1024p Hash',)),
+    '8cdf95d0': [(log, ('1.3 -> 1.4: Caesar BodyA NormalMap 1024p Hash',)), (update_hash, ('a8abff9d',)),],
+    'a8abff9d': [
+        (log,                           ('1.4: Caesar BodyA NormalMap 1024p Hash',)),
         (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('c1f1e12f', 'Caesar.BodyA.NormalMap.2048')),
+        (multiply_section_if_missing,   (('f1c6c309', 'c1f1e12f'), 'Caesar.BodyA.NormalMap.2048')),
     ],
 
 
@@ -3774,14 +3779,25 @@ hash_commands = {
     '00172ec3': [(log, ('1.1: Seth Body IB Hash',)), (add_ib_check_if_missing,)],
     '52f5aa74': [(log, ('1.1: Seth Head IB Hash',)), (add_ib_check_if_missing,)],
 
-    'a91eeef2': [
-        (log,            ('1.2 -> 1.3: Seth Hair Texcoord Hash',)),
-        (update_hash,    ('a72f760f',)),
+    # Reversed in v1.4
+    # 'a91eeef2': [
+    #     (log,            ('1.2 -> 1.3: Seth Hair Texcoord Hash',)),
+    #     (update_hash,    ('a72f760f',)),
+    #     (log,            ('+ Remapping texcoord buffer',)),
+    #     (zzz_13_remap_texcoord, (
+    #         '13_Seth_Hair',
+    #         ('4B','2e','2f','2e'),
+    #         ('4f','2e','2f','2e')
+    #     )),
+    # ],
+    'a72f760f': [
+        (log,            ('1.3 -> 1.4: Seth Hair Texcoord Hash',)),
+        (update_hash,    ('a91eeef2',)),
         (log,            ('+ Remapping texcoord buffer',)),
         (zzz_13_remap_texcoord, (
-            '13_Seth_Hair',
-            ('4B','2e','2f','2e'),
-            ('4f','2e','2f','2e')
+            '14_Seth_Hair',
+            ('4f','2e','2f','2e'),
+            ('4B','2e','2f','2e')
         )),
     ],
 

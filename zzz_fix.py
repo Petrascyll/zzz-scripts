@@ -1813,8 +1813,9 @@ hash_commands = {
         (multiply_section_if_missing,   ('d5d89d5b', 'Caesar.BodyA.MaterialMap.2048')),
     ],
 
-    'c1f1e12f': [(log, ('1.3 -> 1.4: Caesar BodyA NormalMap 2048p Hash',)), (update_hash, ('f1c6c309',)),],
-    'f1c6c309': [
+    'c1f1e12f': [(log, ('1.3 -> 1.4: Caesar BodyA NormalMap 2048p Hash',)),   (update_hash, ('36f39b49',)),],
+    'f1c6c309': [(log, ('1.4B -> 1.4C: Caesar BodyA NormalMap 2048p Hash',)), (update_hash, ('36f39b49',)),],
+    '36f39b49': [
         (log,                           ('1.4: Caesar BodyA NormalMap 2048p Hash',)),
         (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   (('a8abff9d', '8cdf95d0'), 'Caesar.BodyA.NormalMap.1024')),
@@ -1823,7 +1824,7 @@ hash_commands = {
     'a8abff9d': [
         (log,                           ('1.4: Caesar BodyA NormalMap 1024p Hash',)),
         (add_section_if_missing,        ('92061e5e', 'Caesar.Body.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   (('f1c6c309', 'c1f1e12f'), 'Caesar.BodyA.NormalMap.2048')),
+        (multiply_section_if_missing,   (('36f39b49', 'f1c6c309', 'c1f1e12f'), 'Caesar.BodyA.NormalMap.2048')),
     ],
 
 

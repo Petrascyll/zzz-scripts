@@ -2946,9 +2946,26 @@ hash_commands = {
     '6749b6e7': [(log, ('1.0: Lycaon Body IB Hash',)),        (add_ib_check_if_missing,)],
     
     '2a340ed5': [(log, ('1.3 -> 1.4: Lycaon Body Draw Hash',)),     (update_hash, ('25418598',))],
-    'b68056b4': [(log, ('1.3 -> 1.4: Lycaon Body Position Hash',)), (update_hash, ('8c7775ae',))],
-    'a485180e': [(log, ('1.3 -> 1.4: Lycaon Body Blend Hash',)),    (update_hash, ('f2d1a929',))],
     '949e688a': [(log, ('1.3 -> 1.4: Lycaon Body Texcoord Hash',)), (update_hash, ('b950fda5',))],
+    'b68056b4': [
+        (log, ('1.3 -> 1.4: Lycaon Body Position Hash',)),
+        (update_hash, ('8c7775ae',)),
+        (log, ('1.3 -> 1.4: Lycaon Body Blend Remap',)),
+        (update_buffer_blend_indices, (
+            '8c7775ae',
+            (50, 51, 89, 90,  98,  99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110),
+            (51, 50, 90, 89, 669, 669, 669, 669, 669, 669, 669, 669, 669,  98,  99, 100, 101)
+        ))
+    ],
+    'a485180e': [
+        (log,                         ('1.3 -> 1.4: Lycaon Body Blend Remap',)),
+        (update_hash,                 ('f2d1a929',)),
+        (update_buffer_blend_indices, (
+            'f2d1a929',
+            (50, 51, 89, 90,  98,  99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110),
+            (51, 50, 90, 89, 669, 669, 669, 669, 669, 669, 669, 669, 669,  98,  99, 100, 101)
+        )),
+    ],
 
     '5e710f36': [(log, ('1.0: Lycaon Mask IB Hash',)), (add_ib_check_if_missing,)],
     '22a1347b': [(log, ('1.0: Lycaon Legs IB Hash',)), (add_ib_check_if_missing,)],

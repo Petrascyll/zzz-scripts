@@ -4585,11 +4585,14 @@ def get_section_hash_pattern(hash) -> re.Pattern:
         r'''
             ^(
                 [ \t]*?\[(?:Texture|Shader)Override.*\][ \t]*
-                (?:\n(?![ \t]*?\[).*?$)*?
+                (?:\n
+                    (?![ \t]*?(?:\[|hash\s*=))
+                    .*$
+                )*?
                 (?:\n\s*hash\s*=\s*{}[ \t]*)
                 (?:
-                    (?:\n(?![ \t]*?\[).*?$)*
-                    (?:\n[\t ]*?[\$\w].*?$)
+                    (?:\n(?![ \t]*?\[).*$)*
+                    (?:\n[\t ]*?[\$\w].*$)
                 )?
             )\s*
         '''.format(hash),
@@ -4603,8 +4606,8 @@ def get_section_title_pattern(title) -> re.Pattern:
             ^(
                 [ \t]*?\[{}\]
                 (?:
-                    (?:\n(?![ \t]*?\[).*?$)*
-                    (?:\n[\t ]*?[\$\w].*?$)
+                    (?:\n(?![ \t]*?\[).*$)*
+                    (?:\n[\t ]*?[\$\w].*$)
                 )?
             )\s*
         '''.format(title),

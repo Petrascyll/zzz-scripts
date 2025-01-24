@@ -1299,17 +1299,19 @@ hash_commands = {
         (multiply_section_if_missing,   ('77670042', 'AstraYao.FaceA.Diffuse.1024')),
     ],
 
-    'da673df0': [
+    'da673df0': [(log, ('1.5A -> 1.5B: AstraYao HairA, LegsA Diffuse 2048p Hash',)), (update_hash, ('2daa2443',))],
+    '2daa2443': [
         (log,                           ('1.5: AstraYao HairA, LegsA Diffuse 2048p Hash',)),
         (add_section_if_missing,        ('53cdac6c', 'AstraYao.Hair.IB', 'match_priority = 0\n')),
         (add_section_if_missing,        ('92f33156', 'AstraYao.Legs.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('7a507e4a', 'AstraYao.HairA.Diffuse.1024')),
+        (multiply_section_if_missing,   (('4b1c1b47', '7a507e4a'), 'AstraYao.HairA.Diffuse.1024')),
     ],
-    '34aad3b4': [
+    '34aad3b4': [(log, ('1.5A -> 1.5B: AstraYao HairA, LegsA LightMap 2048p Hash',)), (update_hash, ('b085765e',))],
+    'b085765e': [
         (log,                           ('1.5: AstraYao HairA, LegsA LightMap 2048p Hash',)),
         (add_section_if_missing,        ('53cdac6c', 'AstraYao.Hair.IB', 'match_priority = 0\n')),
         (add_section_if_missing,        ('92f33156', 'AstraYao.Legs.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('e4a4f975', 'AstraYao.HairA.LightMap.1024')),
+        (multiply_section_if_missing,   (('c47a524a', 'e4a4f975'), 'AstraYao.HairA.LightMap.1024')),
     ],
     'b53b2e12': [
         (log,                           ('1.5: AstraYao HairA, LegsA MaterialMap 2048p Hash',)),
@@ -1317,17 +1319,20 @@ hash_commands = {
         (add_section_if_missing,        ('92f33156', 'AstraYao.Legs.IB', 'match_priority = 0\n')),
         (multiply_section_if_missing,   ('0be99d44', 'AstraYao.HairA.MaterialMap.1024')),
     ],
-    '7a507e4a': [
+
+    '7a507e4a': [(log, ('1.5A -> 1.5B: AstraYao HairA, LegsA Diffuse 1024p Hash',)), (update_hash, ('4b1c1b47',))],
+    '4b1c1b47': [
         (log,                           ('1.5: AstraYao HairA, LegsA Diffuse 1024p Hash',)),
         (add_section_if_missing,        ('53cdac6c', 'AstraYao.Hair.IB', 'match_priority = 0\n')),
         (add_section_if_missing,        ('92f33156', 'AstraYao.Legs.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('da673df0', 'AstraYao.HairA.Diffuse.2048')),
+        (multiply_section_if_missing,   (('2daa2443', 'da673df0'), 'AstraYao.HairA.Diffuse.2048')),
     ],
-    'e4a4f975': [
+    'e4a4f975': [(log, ('1.5A -> 1.5B: AstraYao HairA, LegsA LightMap 1024p Hash',)), (update_hash, ('c47a524a',))],
+    'c47a524a': [
         (log,                           ('1.5: AstraYao HairA, LegsA LightMap 1024p Hash',)),
         (add_section_if_missing,        ('53cdac6c', 'AstraYao.Hair.IB', 'match_priority = 0\n')),
         (add_section_if_missing,        ('92f33156', 'AstraYao.Legs.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('34aad3b4', 'AstraYao.HairA.LightMap.2048')),
+        (multiply_section_if_missing,   (('b085765e', '34aad3b4'), 'AstraYao.HairA.LightMap.2048')),
     ],
     '0be99d44': [
         (log,                           ('1.5: AstraYao HairA, LegsA MaterialMap 1024p Hash',)),

@@ -2168,6 +2168,77 @@ hash_commands = {
 
 
 
+    # MARK: Evelyn
+    '10a5bde2': [(log, ('1.5: Evelyn Hair IB Hash',)),      (add_ib_check_if_missing,)],
+    '04b53ecd': [(log, ('1.5: Evelyn Body IB Hash',)),      (add_ib_check_if_missing,)],
+    'bb6d1023': [(log, ('1.5: Evelyn Jacket IB Hash',)),    (add_ib_check_if_missing,)],
+    'b3eaedb0': [(log, ('1.5: Evelyn Shoulders IB Hash',)), (add_ib_check_if_missing,)],
+    'ddf4efa6': [(log, ('1.5: Evelyn Face IB Hash',)),      (add_ib_check_if_missing,)],
+
+    '8e1d1a6f': [
+        (log,                           ('1.5: Evelyn FaceA Diffuse 2048p Hash',)),
+        (add_section_if_missing,        ('ddf4efa6', 'Evelyn.Face.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('bc090438', 'Evelyn.FaceA.Diffuse.1024')),
+    ],
+    'bc090438': [
+        (log,                           ('1.5: Evelyn FaceA Diffuse 1024p Hash',)),
+        (add_section_if_missing,        ('ddf4efa6', 'Evelyn.Face.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   ('8e1d1a6f', 'Evelyn.FaceA.Diffuse.2048')),
+    ],
+
+
+    '0e5c3c97': [
+        (log,                           ('1.5: Evelyn Hair, Jacket Diffuse 2048p Hash',)),
+        (multiply_section_if_missing,   ('65a7592d', 'Evelyn.Hair.Diffuse.1024')),
+    ],
+    'e1434e0d': [
+        (log,                           ('1.5: Evelyn Hair, Jacket LightMap 2048p Hash',)),
+        (multiply_section_if_missing,   ('eb414a98', 'Evelyn.Hair.LightMap.1024')),
+    ],
+    'b2718585': [
+        (log,                           ('1.5: Evelyn Hair, Jacket MaterialMap 2048p Hash',)),
+        (multiply_section_if_missing,   ('e680f0c7', 'Evelyn.Hair.MaterialMap.1024')),
+    ],
+    '65a7592d': [
+        (log,                           ('1.5: Evelyn Hair, Jacket Diffuse 1024p Hash',)),
+        (multiply_section_if_missing,   ('0e5c3c97', 'Evelyn.Hair.Diffuse.2048')),
+    ],
+    'eb414a98': [
+        (log,                           ('1.5: Evelyn Hair, Jacket LightMap 1024p Hash',)),
+        (multiply_section_if_missing,   ('e1434e0d', 'Evelyn.Hair.LightMap.2048')),
+    ],
+    'e680f0c7': [
+        (log,                           ('1.5: Evelyn Hair, Jacket MaterialMap 1024p Hash',)),
+        (multiply_section_if_missing,   ('b2718585', 'Evelyn.Hair.MaterialMap.2048')),
+    ],
+
+    'a59b14c0': [
+        (log,                           ('1.5: Evelyn Body, Shoulder Diffuse 2048p Hash',)),
+        (multiply_section_if_missing,   ('93033898', 'Evelyn.Body.Diffuse.1024')),
+    ],
+    'd022d32c': [
+        (log,                           ('1.5: Evelyn Body, Shoulder LightMap 2048p Hash',)),
+        (multiply_section_if_missing,   ('16aab2ab', 'Evelyn.Body.LightMap.1024')),
+    ],
+    '8624e4e4': [
+        (log,                           ('1.5: Evelyn Body, Shoulder MaterialMap 2048p Hash',)),
+        (multiply_section_if_missing,   ('716561f0', 'Evelyn.Body.MaterialMap.1024')),
+    ],
+    '93033898': [
+        (log,                           ('1.5: Evelyn Body, Shoulder Diffuse 1024p Hash',)),
+        (multiply_section_if_missing,   ('a59b14c0', 'Evelyn.Body.Diffuse.2048')),
+    ],
+    '16aab2ab': [
+        (log,                           ('1.5: Evelyn Body, Shoulder LightMap 1024p Hash',)),
+        (multiply_section_if_missing,   ('d022d32c', 'Evelyn.Body.LightMap.2048')),
+    ],
+    '716561f0': [
+        (log,                           ('1.5: Evelyn Body, Shoulder MaterialMap 1024p Hash',)),
+        (multiply_section_if_missing,   ('8624e4e4', 'Evelyn.Body.MaterialMap.2048')),
+    ],
+
+
+
     # MARK: Grace
     '89299f56': [(log, ('1.0: Grace Hair IB Hash',)), (add_ib_check_if_missing,)],
     '8b240678': [(log, ('1.2: Grace Body IB Hash',)), (add_ib_check_if_missing,)],

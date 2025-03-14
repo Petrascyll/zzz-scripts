@@ -3105,17 +3105,26 @@ hash_commands = {
 
     '5e710f36': [(log, ('1.0: Lycaon Mask IB Hash',)), (add_ib_check_if_missing,)],
     '22a1347b': [(log, ('1.0: Lycaon Legs IB Hash',)), (add_ib_check_if_missing,)],
-    '7341e07b': [(log, ('1.0: Lycaon Head IB Hash',)), (add_ib_check_if_missing,)],
+    '6ffdfccb': [(log, ('1.6: Lycaon Head IB Hash',)), (add_ib_check_if_missing,)],
 
-    '4f098897': [
+    '7074f97e': [(log, ('1.5 -> 1.6: Lycaon Head Draw Hash',)),     (update_hash, ('44277f65',))],
+    '4a666a39': [(log, ('1.5 -> 1.6: Lycaon Head Position Hash',)), (update_hash, ('7e35ec22',))],
+    'c862a611': [(log, ('1.5 -> 1.6: Lycaon Head Blend Hash',)),    (update_hash, ('e2d4c532',))],
+    '6902f441': [(log, ('1.? -> 1.?: Lycaon Head Texcoord Hash',)), (update_hash, ('b1edaf35',))],
+    'b1edaf35': [(log, ('1.? -> 1.6: Lycaon Head Texcoord Hash',)), (update_hash, ('3adaebb3',))],
+    '7341e07b': [(log, ('1.5 -> 1.6: Lycaon Head IB Hash',)),       (update_hash, ('6ffdfccb',))],
+
+    '4f098897': [(log, ('1.5 -> 1.6: Lycaon Head Diffuse 1024p Hash',)), (update_hash, ('2cc208a7',))],
+    '2cc208a7': [
         (log,                           ('1.0: Lycaon HeadA Diffuse 1024p Hash',)),
-        (add_section_if_missing,        ('7341e07b', 'Lycaon.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('d14f3284', 'Lycaon.HeadA.Diffuse.2048')),
+        (add_section_if_missing,        (('6ffdfccb', '7341e07b'), 'Lycaon.Head.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   (('7077ebb1', 'd14f3284'), 'Lycaon.HeadA.Diffuse.2048')),
     ],
-    'd14f3284': [
+    'd14f3284': [(log, ('1.5 -> 1.6: Lycaon Head Diffuse 2048p Hash',)), (update_hash, ('7077ebb1',))],
+    '7077ebb1': [
         (log,                           ('1.0: Lycaon HeadA Diffuse 2048p Hash',)),
-        (add_section_if_missing,        ('7341e07b', 'Lycaon.Head.IB', 'match_priority = 0\n')),
-        (multiply_section_if_missing,   ('4f098897', 'Lycaon.HeadA.Diffuse.1024')),
+        (add_section_if_missing,        (('6ffdfccb', '7341e07b'), 'Lycaon.Head.IB', 'match_priority = 0\n')),
+        (multiply_section_if_missing,   (('2cc208a7', '4f098897'), 'Lycaon.HeadA.Diffuse.1024')),
     ],
 
     '61aaace5': [

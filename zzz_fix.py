@@ -4365,8 +4365,8 @@ hash_commands = {
     '9581de22': [(log, ('1.0 -> 1.1: Wise Body Position Hash',)), (update_hash, ('67f21c9f',))],
     'a012c752': [(log, ('1.0 -> 1.1: Wise Body Texcoord Hash',)), (update_hash, ('f425bd04',))],
 
-    '67f21c9f': [(log, ('1.2 -> 1.3: Wise Body Position Hash',)), (update_hash, ('f6c5b9f3',))],
-    'f425bd04': [(log, ('1.2 -> 1.3: Wise Body Texcoord Hash',)), (update_hash, ('a9d5b70d',))],
+    # '67f21c9f': [(log, ('1.2 -> 1.3: Wise Body Position Hash',)), (update_hash, ('f6c5b9f3',))],
+    # 'f425bd04': [(log, ('1.2 -> 1.3: Wise Body Texcoord Hash',)), (update_hash, ('a9d5b70d',))],
 
     'f6c5b9f3': [(log, ('1.5 -> 1.6: Wise Body Position Hash',)),  (update_hash, ('67f21c9f',))],
     'a9d5b70d': [(log, ('1.5 -> 1.6: Wise Body Texcoord Hash',)),  (update_hash, ('f425bd04',))],
